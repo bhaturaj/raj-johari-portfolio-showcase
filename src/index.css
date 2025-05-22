@@ -14,16 +14,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 221 83% 53%;
+    --primary: 259 84% 60%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 262 83% 95%;
+    --secondary-foreground: 260 50% 30%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
 
-    --accent: 221 83% 53%;
+    --accent: 262 83% 58%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84% 60%;
@@ -31,7 +31,7 @@
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --ring: 259 84% 60%;
 
     --radius: 0.75rem;
   }
@@ -69,23 +69,52 @@
       transform: translateY(0);
     }
   }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(123, 97, 255, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(123, 97, 255, 0.8);
+    }
+  }
+  
+  @keyframes color-shift {
+    0% {
+      filter: hue-rotate(0deg);
+    }
+    50% {
+      filter: hue-rotate(15deg);
+    }
+    100% {
+      filter: hue-rotate(0deg);
+    }
+  }
+  
+  .color-shift {
+    animation: color-shift 8s infinite;
+  }
+  
+  .pulse-effect {
+    animation: pulse-glow 3s infinite;
+  }
 }
 
 @layer components {
   .skill-pill {
-    @apply px-4 py-2 bg-white rounded-full shadow-md text-sm font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 flex items-center justify-center hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100;
+    @apply px-4 py-2 bg-gradient-to-r from-white to-purple-50 rounded-full shadow-md text-sm font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 flex items-center justify-center hover:bg-gradient-to-r hover:from-purple-50 hover:to-indigo-100 border border-transparent hover:border-purple-200;
   }
   
   .project-card {
-    @apply bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    @apply bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-2 border-transparent hover:border-primary/20;
   }
   
   .social-icon {
-    @apply w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-md transition-all duration-300 hover:bg-primary hover:text-white hover:scale-110;
+    @apply w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-white to-purple-50 shadow-md transition-all duration-300 hover:bg-primary hover:text-white hover:scale-110;
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-transparent;
   }
 
   .glass-card {
@@ -97,7 +126,7 @@
   }
 
   .animated-bg {
-    @apply bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 bg-size-200 animate-gradient-flow;
+    @apply bg-gradient-to-r from-violet-100 via-purple-200 to-indigo-100 bg-size-200 animate-gradient-flow;
   }
 
   .section-title {
@@ -106,11 +135,26 @@
 
   .section-title::after {
     content: '';
-    @apply absolute bottom-0 left-0 w-full h-1 bg-primary transform scale-x-0 origin-bottom-right transition-transform duration-300;
+    @apply absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-indigo-500 transform scale-x-0 origin-bottom-right transition-transform duration-300;
   }
 
   .section-title:hover::after {
     @apply scale-x-100 origin-bottom-left;
+  }
+  
+  .glowing-border {
+    @apply border-2 border-transparent transition-all duration-500;
+    background: linear-gradient(to right, transparent, transparent), 
+                linear-gradient(to right, rgba(123, 97, 255, 0.2), rgba(138, 43, 226, 0.7), rgba(75, 0, 130, 0.8));
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+  }
+  
+  .glowing-border:hover {
+    background: linear-gradient(to right, transparent, transparent), 
+                linear-gradient(to right, rgba(138, 43, 226, 0.7), rgba(123, 97, 255, 0.9), rgba(138, 43, 226, 0.7));
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
   }
 }
 

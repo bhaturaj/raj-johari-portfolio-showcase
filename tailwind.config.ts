@@ -93,6 +93,14 @@ export default {
 				'gradient-flow': {
 					'0%, 100%': { backgroundPosition: '0% 50%' },
 					'50%': { backgroundPosition: '100% 50%' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'shimmer': {
+					'0%': { backgroundPosition: '100% 0%' },
+					'100%': { backgroundPosition: '-100% 0%' }
 				}
 			},
 			animation: {
@@ -100,16 +108,20 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out forwards',
 				'fade-in-right': 'fade-in-right 0.5s ease-out forwards',
-				'gradient-flow': 'gradient-flow 6s ease infinite'
+				'gradient-flow': 'gradient-flow 6s ease infinite',
+				'float': 'float 3s ease-in-out infinite',
+				'shimmer': 'shimmer 2s infinite'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'hero-gradient': 'linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)',
-				'about-gradient': 'linear-gradient(109.6deg, rgba(223,234,247,1) 11.2%, rgba(244,248,252,1) 91.1%)',
-				'resume-gradient': 'linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%)',
-				'skills-gradient': 'linear-gradient(90deg, hsla(46, 73%, 75%, 1) 0%, hsla(176, 73%, 88%, 1) 100%)',
-				'card-hover': 'linear-gradient(225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%)',
-				'cta-gradient': 'linear-gradient(90deg, hsla(39, 100%, 77%, 1) 0%, hsla(22, 90%, 57%, 1) 100%)',
+				'hero-gradient': 'linear-gradient(135deg, hsla(259, 84%, 30%, 1) 0%, hsla(224, 85%, 26%, 1) 100%)',
+				'about-gradient': 'linear-gradient(109.6deg, rgba(233, 230, 255, 1) 11.2%, rgba(244, 240, 255, 1) 91.1%)',
+				'resume-gradient': 'linear-gradient(135deg, hsla(260, 100%, 97%, 1) 0%, hsla(290, 100%, 96%, 1) 100%)',
+				'skills-gradient': 'linear-gradient(135deg, hsla(270, 80%, 96%, 1) 0%, hsla(240, 100%, 97%, 1) 100%)',
+				'card-hover': 'linear-gradient(225deg, #c4b5fd 0%, #a78bfa 48%, #8b5cf6 100%)',
+				'cta-gradient': 'linear-gradient(135deg, hsla(259, 84%, 60%, 1) 0%, hsla(224, 85%, 55%, 1) 100%)',
+				'shimmer': 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%)',
+				'purple-glow': 'radial-gradient(circle, rgba(167, 139, 250, 0.3) 0%, rgba(139, 92, 246, 0.2) 50%, rgba(0, 0, 0, 0) 70%)',
 			}
 		}
 	},
