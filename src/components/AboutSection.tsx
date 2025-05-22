@@ -18,7 +18,7 @@ const AboutSection = () => {
                 {/* Profile image placeholder - would be replaced with an actual image */}
                 <img 
                   src="/placeholder.svg" 
-                  alt="Raj Bhaiya Johari" 
+                  alt="Bhaturaj Johari" 
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -30,7 +30,7 @@ const AboutSection = () => {
           </div>
           
           <div>
-            <h3 className="text-2xl font-bold mb-4">Raj Bhaiya Johari</h3>
+            <h3 className="text-2xl font-bold mb-4">Bhaturaj Johari</h3>
             
             <p className="text-muted-foreground mb-6">
               I am a passionate tech enthusiast and developer with a strong foundation in programming and software development. My journey in technology began with a curiosity about how things work in the digital world, which led me to pursue formal education in computer science and develop various technical skills.

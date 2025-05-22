@@ -40,7 +40,7 @@ const Header = () => {
     >
       <div className="container mx-auto flex items-center justify-between px-6">
         <a href="#home" className="text-xl font-bold font-heading text-primary">
-          Raj<span className="text-foreground">Johari</span>
+          Bhaturaj<span className="text-foreground">Johari</span>
         </a>
 
         {/* Desktop Menu */}

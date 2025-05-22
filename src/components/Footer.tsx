@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div>
             <p className="text-lg font-bold">
-              Raj<span className="text-primary">Johari</span>
+              Bhaturaj<span className="text-primary">Johari</span>
             </p>
             <p className="text-sm text-gray-400">
               Developer & Tech Enthusiast
@@ -19,7 +19,7 @@ const Footer = () => {
           
           <div className="mt-4 md:mt-0">
             <p className="text-sm text-gray-400">
-              &copy; {currentYear} Raj Bhaiya Johari. All Rights Reserved.
+              &copy; {currentYear} Bhaturaj Johari. All Rights Reserved.
             </p>
           </div>
         </div>
