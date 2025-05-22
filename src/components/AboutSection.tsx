@@ -15,9 +15,9 @@ const AboutSection = () => {
           <div className="flex justify-center">
             <div className="relative">
               <div className="w-64 h-72 md:w-80 md:h-96 bg-gray-200 rounded-lg overflow-hidden">
-                {/* Profile image placeholder - would be replaced with an actual image */}
+                {/* Using the uploaded profile image */}
                 <img 
-                  src="/placeholder.svg" 
+                  src="/lovable-uploads/e503cca6-5f90-49b2-9dcb-327021bcfec5.png" 
                   alt="Bhaturaj Johari" 
                   className="w-full h-full object-cover"
                 />
