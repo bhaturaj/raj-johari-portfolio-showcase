@@ -4,7 +4,7 @@ import { Mail, Phone, Linkedin, Github, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 
 type FormData = {
