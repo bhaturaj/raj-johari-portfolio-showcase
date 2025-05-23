@@ -71,7 +71,7 @@ const HeroSection = () => {
         </a>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .name-animation {
           animation: text-shimmer 3s infinite;
         }

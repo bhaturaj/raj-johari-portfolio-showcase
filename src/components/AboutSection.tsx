@@ -16,9 +16,9 @@ const AboutSection = () => {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-lg blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
               <div className="w-64 h-72 md:w-80 md:h-96 bg-gray-200 rounded-lg overflow-hidden interactive-border relative z-10">
-                {/* Using the uploaded profile image */}
+                {/* Using the new uploaded profile image */}
                 <img 
-                  src="/lovable-uploads/e503cca6-5f90-49b2-9dcb-327021bcfec5.png" 
+                  src="/lovable-uploads/e1d62208-1d51-40fa-85df-f10f02304d02.png" 
                   alt="Bhaturaj Johari" 
                   className="w-full h-full object-cover"
                 />
