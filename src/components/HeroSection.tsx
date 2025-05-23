@@ -26,11 +26,16 @@ const HeroSection = () => {
             <span className="inline-block text-white font-medium mb-4 py-1 px-4 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">Hello, I'm</span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 reveal-animation text-white color-shift" style={{"--reveal-delay": "2"} as React.CSSProperties}>
-            Bhaturaj <span className="gradient-text">Johari</span>
-          </h1>
+          <div className="name-container reveal-animation" style={{"--reveal-delay": "2"} as React.CSSProperties}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4 text-white name-animation">
+              <span className="name-text relative inline-block">
+                Bhaturaj <span className="highlight-text bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent hover:scale-105 transition-transform cursor-default">Johari</span>
+              </span>
+            </h1>
+            <div className="name-shadow absolute left-1/2 transform -translate-x-1/2 opacity-30 blur-md -z-10"></div>
+          </div>
           
-          <div className="h-1 w-20 bg-gradient-to-r from-violet-400 to-indigo-500 mx-auto my-6 reveal-animation" style={{"--reveal-delay": "3"} as React.CSSProperties}></div>
+          <div className="h-1.5 w-32 bg-gradient-to-r from-violet-400 via-pink-500 to-indigo-500 mx-auto my-6 reveal-animation rounded-full shadow-glow" style={{"--reveal-delay": "3"} as React.CSSProperties}></div>
           
           <h2 className="text-xl md:text-2xl font-medium text-purple-100 mb-8 reveal-animation" style={{"--reveal-delay": "4"} as React.CSSProperties}>
             Developer & Tech Enthusiast
@@ -65,6 +70,49 @@ const HeroSection = () => {
           <ArrowDown size={24} />
         </a>
       </div>
+
+      <style jsx>{`
+        .name-animation {
+          animation: text-shimmer 3s infinite;
+        }
+        
+        .name-text:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -5px;
+          height: 4px;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+          transform: translateX(-100%);
+          animation: light-slide 3s infinite;
+        }
+        
+        .highlight-text {
+          text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+          animation: pulse-text 2s infinite alternate;
+        }
+        
+        @keyframes light-slide {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        
+        @keyframes pulse-text {
+          0% { opacity: 0.9; }
+          100% { opacity: 1; text-shadow: 0 0 20px rgba(139, 92, 246, 0.8); }
+        }
+        
+        @keyframes text-shimmer {
+          0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
+          50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+          100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
+        }
+        
+        .shadow-glow {
+          box-shadow: 0 0 10px rgba(139, 92, 246, 0.7);
+        }
+      `}</style>
     </section>
   );
 };
