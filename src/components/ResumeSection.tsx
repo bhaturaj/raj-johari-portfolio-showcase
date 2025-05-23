@@ -17,7 +17,7 @@ const ResumeSection = () => {
           <div className="bg-white rounded-xl shadow-md p-8 mb-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="text-center md:text-left">
-                <h3 className="text-xl font-bold mb-2">Raj Bhaiya Johari - Resume</h3>
+                <h3 className="text-xl font-bold mb-2">Bhaturaj Johari - Resume</h3>
                 <p className="text-muted-foreground">
                   Complete details of my technical background and projects
                 </p>

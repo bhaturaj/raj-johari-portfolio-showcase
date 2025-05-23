@@ -1,21 +1,56 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Mail, Phone, Linkedin, Github, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/toast";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // In a real app, you would send the form data to a backend
-    toast({
-      title: "Message sent!",
-      description: "Thank you for your message. I'll get back to you soon.",
-    });
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
+  
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
+    
+    try {
+      // Create a mailto link with form data
+      const subject = encodeURIComponent(data.subject);
+      const body = encodeURIComponent(
+        `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`
+      );
+      
+      // Open email client with pre-filled data
+      window.location.href = `mailto:johariraj70@gmail.com?subject=${subject}&body=${body}`;
+      
+      // Show success message
+      toast({
+        title: "Message prepared!",
+        description: "Your email client has been opened with your message.",
+      });
+      
+      // Reset the form
+      reset();
+    } catch (error) {
+      console.error("Error:", error);
+      toast({
+        title: "Error",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -40,7 +75,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Email</p>
-                  <p className="font-medium">raj.johari@example.com</p>
+                  <p className="font-medium">johariraj70@gmail.com</p>
                 </div>
               </div>
               
@@ -50,7 +85,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Phone</p>
-                  <p className="font-medium">(+91) Your-Phone-Number</p>
+                  <p className="font-medium">+91 8888176317</p>
                 </div>
               </div>
               
@@ -88,13 +123,14 @@ const ContactSection = () => {
           <div>
             <h3 className="text-xl font-bold mb-6">Send Me a Message</h3>
             
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <Input 
                   placeholder="Your Name" 
                   className="bg-gray-800 border-gray-700 focus:border-primary text-white"
-                  required
+                  {...register("name", { required: "Name is required" })}
                 />
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
               </div>
               
               <div>
@@ -102,28 +138,37 @@ const ContactSection = () => {
                   type="email"
                   placeholder="Your Email" 
                   className="bg-gray-800 border-gray-700 focus:border-primary text-white"
-                  required
+                  {...register("email", { 
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invalid email address"
+                    }
+                  })}
                 />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
               </div>
               
               <div>
                 <Input 
                   placeholder="Subject" 
                   className="bg-gray-800 border-gray-700 focus:border-primary text-white"
-                  required
+                  {...register("subject", { required: "Subject is required" })}
                 />
+                {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject.message}</p>}
               </div>
               
               <div>
                 <Textarea 
                   placeholder="Your Message" 
                   className="bg-gray-800 border-gray-700 focus:border-primary text-white min-h-[150px]"
-                  required
+                  {...register("message", { required: "Message is required" })}
                 />
+                {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
               </div>
               
-              <Button type="submit" className="w-full">
-                Send Message
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>
