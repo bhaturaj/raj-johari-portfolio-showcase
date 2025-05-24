@@ -8,6 +8,7 @@ import ProjectsSection from "@/components/ProjectsSection";
 import ResumeSection from "@/components/ResumeSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import AdminButton from "@/components/AdminButton";
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
       <ResumeSection />
       <ContactSection />
       <Footer />
+      <AdminButton />
     </div>
   );
 };
