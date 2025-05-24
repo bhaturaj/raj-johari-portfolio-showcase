@@ -47,42 +47,86 @@ const SkillsSection = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          {categories.map((category, index) => (
-            <div key={category} className="mb-10">
-              <h3 className="text-xl font-bold mb-4 text-violet-800">{category}</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {skills
-                  .filter((skill) => skill.category === category)
-                  .map((skill, skillIndex) => (
-                    <div 
-                      key={skill.name} 
-                      className="skill-pill hover:shadow-lg hover:shadow-purple-200/30 transition-all"
-                      style={{
-                        "--reveal-delay": index + skillIndex * 0.2
-                      } as React.CSSProperties}
-                    >
-                      <div className="flex flex-col items-center w-full">
-                        <span className="text-violet-800 font-medium mb-2">
-                          {skill.name}
-                        </span>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-                          <div
-                            className={`bg-gradient-to-r ${categoryColors[category] || "from-violet-500 to-indigo-500"} h-2.5 rounded-full relative`}
-                            style={{ width: `${skill.level}%` }}
+        <div className="max-w-6xl mx-auto">
+          {categories.map((category, categoryIndex) => (
+            <div key={category} className="mb-12 overflow-hidden">
+              <h3 className="text-xl font-bold mb-6 text-violet-800 text-center">{category}</h3>
+              
+              {/* Scrolling container */}
+              <div className="relative">
+                <div 
+                  className={`flex gap-4 ${
+                    categoryIndex % 2 === 0 ? 'animate-scroll-left' : 'animate-scroll-right'
+                  }`}
+                  style={{
+                    width: 'max-content',
+                    animationDuration: '20s',
+                    animationIterationCount: 'infinite',
+                    animationTimingFunction: 'linear'
+                  }}
+                >
+                  {/* Duplicate the skills for continuous scrolling */}
+                  {[...Array(3)].map((_, duplicateIndex) => (
+                    <React.Fragment key={duplicateIndex}>
+                      {skills
+                        .filter((skill) => skill.category === category)
+                        .map((skill, skillIndex) => (
+                          <div 
+                            key={`${skill.name}-${duplicateIndex}`}
+                            className="skill-pill hover:shadow-lg hover:shadow-purple-200/30 transition-all flex-shrink-0 w-64"
                           >
-                            <div className="absolute top-0 left-0 w-full h-full bg-shimmer opacity-50 animate-shimmer"></div>
+                            <div className="flex flex-col items-center w-full">
+                              <span className="text-violet-800 font-medium mb-2">
+                                {skill.name}
+                              </span>
+                              <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                                <div
+                                  className={`bg-gradient-to-r ${categoryColors[category] || "from-violet-500 to-indigo-500"} h-2.5 rounded-full relative`}
+                                  style={{ width: `${skill.level}%` }}
+                                >
+                                  <div className="absolute top-0 left-0 w-full h-full bg-shimmer opacity-50 animate-shimmer"></div>
+                                </div>
+                              </div>
+                              <span className="text-xs text-violet-600 mt-1 font-medium">{skill.level}%</span>
+                            </div>
                           </div>
-                        </div>
-                        <span className="text-xs text-violet-600 mt-1 font-medium">{skill.level}%</span>
-                      </div>
-                    </div>
+                        ))}
+                    </React.Fragment>
                   ))}
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes scroll-left {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-33.333%);
+          }
+        }
+        
+        @keyframes scroll-right {
+          0% {
+            transform: translateX(-33.333%);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+        
+        .animate-scroll-left {
+          animation: scroll-left 20s linear infinite;
+        }
+        
+        .animate-scroll-right {
+          animation: scroll-right 20s linear infinite;
+        }
+      `}</style>
     </section>
   );
 };

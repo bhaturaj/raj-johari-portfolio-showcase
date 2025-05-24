@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { X, Settings, User, Code, Briefcase, FileText, Mail, Palette } from "lucide-react";
+import { X, Settings, User, Code, Briefcase, FileText, Mail, Palette, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +15,21 @@ interface AdminPanelProps {
 }
 
 const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginId, setLoginId] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+
+  // Authentication
+  const handleLogin = () => {
+    if (loginId === "Bhaturaj" && loginPassword === "8888176317") {
+      setIsAuthenticated(true);
+      setLoginError("");
+    } else {
+      setLoginError("Invalid credentials");
+    }
+  };
+
   // Hero Section State
   const [heroData, setHeroData] = useState({
     name: "Bhaturaj Johari",
@@ -93,8 +108,8 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
   });
 
   const handleSaveChanges = () => {
-    // In a real application, this would save to a database
-    console.log("Saving changes:", {
+    // Save changes directly without alert
+    console.log("Changes saved:", {
       hero: heroData,
       about: aboutData,
       skills: skillsData,
@@ -103,7 +118,6 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
       contact: contactData,
       theme: themeData
     });
-    alert("Changes saved successfully! (Note: This is a demo - changes won't persist)");
     onClose();
   };
 
@@ -141,8 +155,65 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
     });
   };
 
+  const handleClose = () => {
+    setIsAuthenticated(false);
+    setLoginId("");
+    setLoginPassword("");
+    setLoginError("");
+    onClose();
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <Dialog open={isOpen} onOpenChange={handleClose}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Lock className="w-5 h-5" />
+              Admin Login
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="login-id">ID</Label>
+              <Input
+                id="login-id"
+                type="text"
+                value={loginId}
+                onChange={(e) => setLoginId(e.target.value)}
+                placeholder="Enter admin ID"
+              />
+            </div>
+            <div>
+              <Label htmlFor="login-password">Password</Label>
+              <Input
+                id="login-password"
+                type="password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                placeholder="Enter password"
+                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+              />
+            </div>
+            {loginError && (
+              <p className="text-red-500 text-sm">{loginError}</p>
+            )}
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button onClick={handleLogin}>
+                Login
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
@@ -554,7 +625,7 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
         </Tabs>
 
         <div className="flex justify-end gap-2 pt-4 border-t">
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="outline" onClick={handleClose}>
             Cancel
           </Button>
           <Button onClick={handleSaveChanges}>
