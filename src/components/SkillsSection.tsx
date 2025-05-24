@@ -1,20 +1,29 @@
 
 import React from "react";
+import { useWebsiteContent } from "@/hooks/useWebsiteContent";
 
 const SkillsSection = () => {
-  const skills = [
-    { name: "C", category: "Languages", level: 85 },
-    { name: "C++", category: "Languages", level: 80 },
-    { name: "Java", category: "Languages", level: 75 },
-    { name: "Python", category: "Languages", level: 70 },
-    { name: "DSA", category: "Core", level: 80 },
-    { name: "DBMS", category: "Database", level: 85 },
-    { name: "SQL", category: "Database", level: 80 },
-    { name: "AI", category: "Technologies", level: 65 },
-    { name: "MEAN Stack", category: "Web", level: 70 },
-    { name: ".NET", category: "Framework", level: 75 },
-  ];
+  const { content, loading } = useWebsiteContent();
 
+  if (loading) {
+    return (
+      <section id="skills" className="section-padding bg-skills-gradient relative overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">My Skills</h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-violet-500 to-indigo-500 mx-auto mb-6"></div>
+            <p className="text-muted-foreground">Loading skills...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!content?.skills?.skills) {
+    return null;
+  }
+
+  const skills = content.skills.skills;
   const categories = Array.from(new Set(skills.map((skill) => skill.category)));
   
   // Custom colors for different categories

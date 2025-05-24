@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X, Settings, User, Code, Briefcase, FileText, Mail, Palette, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { useWebsiteContent } from "@/hooks/useWebsiteContent";
+import { useToast } from "@/hooks/use-toast";
 
 interface AdminPanelProps {
   isOpen: boolean;
@@ -19,6 +21,78 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
   const [loginId, setLoginId] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  
+  const { content, loading, updateContent } = useWebsiteContent();
+  const { toast } = useToast();
+
+  // Local state for editing
+  const [heroData, setHeroData] = useState({
+    name: "",
+    role: "",
+    slogan: ""
+  });
+
+  const [aboutData, setAboutData] = useState({
+    dateOfBirth: "",
+    education: "",
+    passion: "",
+    careerGoals: "",
+    profileImage: ""
+  });
+
+  const [skillsData, setSkillsData] = useState<Array<{
+    name: string;
+    category: string;
+    level: number;
+    icon: string;
+  }>>([]);
+
+  const [projectsData, setProjectsData] = useState({
+    title: "",
+    description: "",
+    projects: [] as Array<{
+      id: number;
+      title: string;
+      description: string;
+      technologies: string[];
+      link: string;
+    }>
+  });
+
+  const [resumeData, setResumeData] = useState({
+    title: "",
+    description: "",
+    downloadLink: ""
+  });
+
+  const [contactData, setContactData] = useState({
+    email: "",
+    phone: "",
+    socialLinks: {
+      linkedin: "",
+      github: "",
+      leetcode: ""
+    }
+  });
+
+  const [themeData, setThemeData] = useState({
+    primaryColor: "",
+    secondaryColor: "",
+    accentColor: ""
+  });
+
+  // Load content into local state when content changes
+  useEffect(() => {
+    if (content) {
+      setHeroData(content.hero);
+      setAboutData(content.about);
+      setSkillsData(content.skills.skills);
+      setProjectsData(content.projects);
+      setResumeData(content.resume);
+      setContactData(content.contact);
+      setThemeData(content.theme);
+    }
+  }, [content]);
 
   // Authentication
   const handleLogin = () => {
@@ -30,95 +104,31 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
     }
   };
 
-  // Hero Section State
-  const [heroData, setHeroData] = useState({
-    name: "Bhaturaj Johari",
-    role: "Developer & Tech Enthusiast",
-    slogan: "Dream Big, Lead Bold"
-  });
-
-  // About Section State
-  const [aboutData, setAboutData] = useState({
-    dateOfBirth: "April 17, 2003",
-    education: "Computer Science Background",
-    passion: "Technology & Innovation",
-    careerGoals: "IT Career Growth",
-    profileImage: "/lovable-uploads/e503cca6-5f90-49b2-9dcb-327021bcfec5.png"
-  });
-
-  // Skills State
-  const [skillsData, setSkillsData] = useState([
-    { name: "C", category: "Languages", level: 85, icon: "⚡" },
-    { name: "C++", category: "Languages", level: 80, icon: "⚡" },
-    { name: "Java", category: "Languages", level: 75, icon: "☕" },
-    { name: "Python", category: "Languages", level: 70, icon: "🐍" },
-    { name: "DSA", category: "Core", level: 80, icon: "🧠" },
-    { name: "DBMS", category: "Database", level: 85, icon: "🗄️" },
-    { name: "SQL", category: "Database", level: 80, icon: "🗄️" },
-    { name: "AI", category: "Technologies", level: 65, icon: "🤖" },
-    { name: "MEAN Stack", category: "Web", level: 70, icon: "🌐" },
-    { name: ".NET", category: "Framework", level: 75, icon: "🔧" },
-  ]);
-
-  // Projects State
-  const [projectsData, setProjectsData] = useState({
-    title: "My Projects",
-    description: "Here are some of the projects I've worked on that showcase my skills and interests",
-    projects: [
-      {
-        id: 1,
-        title: "City Explorer App",
-        description: "An interactive application that helps users navigate and discover points of interest in different cities.",
-        technologies: ["React", "Node.js", "MongoDB", "Google Maps API"],
-        link: "#"
-      },
-      {
-        id: 2,
-        title: "AI-based Question Generator",
-        description: "A smart system that generates relevant questions based on educational content for teachers and students.",
-        technologies: ["Python", "TensorFlow", "Flask", "NLP"],
-        link: "#"
-      }
-    ]
-  });
-
-  // Resume State
-  const [resumeData, setResumeData] = useState({
-    title: "Bhaturaj Johari - Resume",
-    description: "Complete details of my technical background and projects",
-    downloadLink: "#"
-  });
-
-  // Contact State
-  const [contactData, setContactData] = useState({
-    email: "johariraj70@gmail.com",
-    phone: "+91 8888176317",
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/",
-      github: "https://github.com/",
-      leetcode: "https://leetcode.com/"
+  const handleSaveChanges = async () => {
+    try {
+      await Promise.all([
+        updateContent('hero', heroData),
+        updateContent('about', aboutData),
+        updateContent('skills', { skills: skillsData }),
+        updateContent('projects', projectsData),
+        updateContent('resume', resumeData),
+        updateContent('contact', contactData),
+        updateContent('theme', themeData)
+      ]);
+      
+      toast({
+        title: "Success",
+        description: "All changes saved successfully",
+      });
+      
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save some changes",
+        variant: "destructive",
+      });
     }
-  });
-
-  // Theme State
-  const [themeData, setThemeData] = useState({
-    primaryColor: "#8B5CF6",
-    secondaryColor: "#6366F1",
-    accentColor: "#EC4899"
-  });
-
-  const handleSaveChanges = () => {
-    // Save changes directly without alert
-    console.log("Changes saved:", {
-      hero: heroData,
-      about: aboutData,
-      skills: skillsData,
-      projects: projectsData,
-      resume: resumeData,
-      contact: contactData,
-      theme: themeData
-    });
-    onClose();
   };
 
   const addNewSkill = () => {
@@ -162,6 +172,18 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
     setLoginError("");
     onClose();
   };
+
+  if (loading) {
+    return (
+      <Dialog open={isOpen} onOpenChange={handleClose}>
+        <DialogContent className="max-w-md">
+          <div className="flex items-center justify-center p-8">
+            <div className="text-center">Loading...</div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   if (!isAuthenticated) {
     return (

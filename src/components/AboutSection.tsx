@@ -1,8 +1,31 @@
 
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useWebsiteContent } from "@/hooks/useWebsiteContent";
 
 const AboutSection = () => {
+  const { content, loading } = useWebsiteContent();
+
+  if (loading) {
+    return (
+      <section id="about" className="section-padding bg-about-gradient">
+        <div className="container mx-auto px-6">
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <h2 className="section-title gradient-text">About Me</h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-blue-400 to-indigo-500 mx-auto"></div>
+            <p className="text-muted-foreground mt-4">Loading...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!content?.about) {
+    return null;
+  }
+
+  const { dateOfBirth, education, passion, careerGoals, profileImage } = content.about;
+
   return (
     <section id="about" className="section-padding bg-about-gradient">
       <div className="container mx-auto px-6">
@@ -16,16 +39,15 @@ const AboutSection = () => {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-lg blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
               <div className="w-64 h-72 md:w-80 md:h-96 bg-gray-200 rounded-lg overflow-hidden interactive-border relative z-10">
-                {/* Using the new uploaded profile image */}
                 <img 
-                  src="/lovable-uploads/e1d62208-1d51-40fa-85df-f10f02304d02.png" 
+                  src={profileImage || "/lovable-uploads/e1d62208-1d51-40fa-85df-f10f02304d02.png"} 
                   alt="Bhaturaj Johari" 
                   className="w-full h-full object-cover"
                 />
               </div>
               
               <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg glass-card group-hover:shadow-xl transition-all duration-300 z-20">
-                <p className="font-medium text-sm gradient-text">Born: April 17, 2003</p>
+                <p className="font-medium text-sm gradient-text">Born: {dateOfBirth}</p>
               </div>
             </div>
           </div>
@@ -45,21 +67,21 @@ const AboutSection = () => {
               <Card className="flex-1 min-w-[150px] hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 transition-all duration-300">
                 <CardContent className="p-4 text-center">
                   <h4 className="font-bold text-xl text-primary">Education</h4>
-                  <p className="text-sm text-muted-foreground mt-2">Computer Science Background</p>
+                  <p className="text-sm text-muted-foreground mt-2">{education}</p>
                 </CardContent>
               </Card>
               
               <Card className="flex-1 min-w-[150px] hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 transition-all duration-300">
                 <CardContent className="p-4 text-center">
                   <h4 className="font-bold text-xl text-primary">Passion</h4>
-                  <p className="text-sm text-muted-foreground mt-2">Technology & Innovation</p>
+                  <p className="text-sm text-muted-foreground mt-2">{passion}</p>
                 </CardContent>
               </Card>
               
               <Card className="flex-1 min-w-[150px] hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 transition-all duration-300">
                 <CardContent className="p-4 text-center">
                   <h4 className="font-bold text-xl text-primary">Goal</h4>
-                  <p className="text-sm text-muted-foreground mt-2">IT Career Growth</p>
+                  <p className="text-sm text-muted-foreground mt-2">{careerGoals}</p>
                 </CardContent>
               </Card>
             </div>
