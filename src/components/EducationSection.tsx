@@ -32,12 +32,25 @@ const EducationSection = () => {
   ];
 
   return (
-    <section id="education" className="section-padding bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="container mx-auto px-6">
+    <section id="education" className="section-padding relative min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-blue-900 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-32 right-40 w-72 h-72 rounded-full bg-blue-300 opacity-10 blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-40 left-40 w-80 h-80 rounded-full bg-indigo-300 opacity-10 blur-3xl animate-pulse" style={{animationDelay: "1s"}}></div>
+        <div className="absolute top-1/3 left-1/3 w-40 h-40 rounded-full bg-purple-400 opacity-5 blur-2xl animate-float"></div>
+        <div className="absolute bottom-1/3 right-1/3 w-56 h-56 rounded-full bg-violet-300 opacity-5 blur-2xl animate-float" style={{animationDelay: "1.5s"}}></div>
+        
+        {/* Floating elements */}
+        <div className="absolute top-20 left-20 w-4 h-4 bg-blue-400 opacity-20 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-6 h-6 bg-purple-400 opacity-20 rounded-full animate-pulse" style={{animationDelay: "0.5s"}}></div>
+        <div className="absolute bottom-20 left-1/4 w-3 h-3 bg-indigo-400 opacity-20 rounded-full animate-pulse" style={{animationDelay: "1s"}}></div>
+      </div>
+      
+      <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-2xl mx-auto text-center mb-16">
-          <h2 className="section-title gradient-text">Education</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Education</h2>
           <div className="h-1 w-16 bg-gradient-to-r from-blue-400 to-indigo-500 mx-auto"></div>
-          <p className="text-muted-foreground mt-4">
+          <p className="text-gray-300 mt-4">
             My academic journey and educational achievements
           </p>
         </div>
@@ -49,7 +62,7 @@ const EducationSection = () => {
               return (
                 <Card 
                   key={index} 
-                  className="group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-lg overflow-hidden"
+                  className="group bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 transform hover:-translate-y-2 shadow-2xl overflow-hidden"
                 >
                   <CardContent className="p-8">
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
@@ -60,13 +73,13 @@ const EducationSection = () => {
                       <div className="flex-1">
                         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
                           <div>
-                            <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary transition-colors">
+                            <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">
                               {edu.level}
                             </h3>
-                            <p className="text-gray-600 font-medium mb-1">
+                            <p className="text-gray-300 font-medium mb-1">
                               {edu.institution}
                             </p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-gray-400">
                               {edu.year}
                             </p>
                           </div>

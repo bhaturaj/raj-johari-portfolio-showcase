@@ -9,7 +9,9 @@ const HeroSection = () => {
     "Code the Future",
     "Innovate with Purpose",
     "Build Tomorrow Today",
-    "Transform Ideas into Reality"
+    "Transform Ideas into Reality",
+    "Connect With Me",
+    "Lets Code Together, Build Together"
   ];
   
   const [currentTagline, setCurrentTagline] = useState("");
