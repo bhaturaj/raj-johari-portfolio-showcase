@@ -1,9 +1,46 @@
 
-import React from "react";
-import { ArrowDown } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ArrowDown, MessageCircle, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
+  const taglines = [
+    "Dream Big, Lead Bold",
+    "Code with Passion",
+    "Innovate the Future",
+    "Transform Ideas into Reality"
+  ];
+  
+  const [currentTagline, setCurrentTagline] = useState("");
+  const [taglineIndex, setTaglineIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const typeSpeed = isDeleting ? 50 : 150;
+    const pauseTime = isDeleting ? 500 : 2000;
+
+    if (!isDeleting && charIndex === taglines[taglineIndex].length) {
+      setTimeout(() => setIsDeleting(true), pauseTime);
+      return;
+    }
+
+    if (isDeleting && charIndex === 0) {
+      setIsDeleting(false);
+      setTaglineIndex((prev) => (prev + 1) % taglines.length);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setCurrentTagline(
+        taglines[taglineIndex].substring(0, charIndex + (isDeleting ? -1 : 1))
+      );
+      setCharIndex((prev) => prev + (isDeleting ? -1 : 1));
+    }, typeSpeed);
+
+    return () => clearTimeout(timer);
+  }, [charIndex, isDeleting, taglineIndex, taglines]);
+
   return (
     <section
       id="home"
@@ -23,7 +60,9 @@ const HeroSection = () => {
       <div className="container mx-auto px-6 pt-20 z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="reveal-animation" style={{"--reveal-delay": "1"} as React.CSSProperties}>
-            <span className="inline-block text-white font-medium mb-4 py-1 px-4 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">Hello, I'm</span>
+            <span className="inline-block text-white font-medium mb-4 py-2 px-6 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg">
+              Hello, I'm
+            </span>
           </div>
           
           <div className="name-container reveal-animation" style={{"--reveal-delay": "2"} as React.CSSProperties}>
@@ -41,25 +80,34 @@ const HeroSection = () => {
             Developer & Tech Enthusiast
           </h2>
           
-          <p className="text-lg text-blue-100 max-w-2xl mx-auto mb-10 reveal-animation italic" style={{"--reveal-delay": "5"} as React.CSSProperties}>
-            "Dream Big, Lead Bold"
-          </p>
+          <div className="text-lg text-blue-100 max-w-2xl mx-auto mb-10 reveal-animation h-8 flex items-center justify-center" style={{"--reveal-delay": "5"} as React.CSSProperties}>
+            <span className="italic font-medium">
+              "{currentTagline}
+              <span className="animate-pulse text-violet-300">|</span>
+              "
+            </span>
+          </div>
           
-          <div className="flex flex-wrap gap-4 justify-center reveal-animation" style={{"--reveal-delay": "6"} as React.CSSProperties}>
+          <div className="flex flex-wrap gap-6 justify-center reveal-animation" style={{"--reveal-delay": "6"} as React.CSSProperties}>
             <Button 
               asChild 
               size="lg" 
-              className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 pulse-effect"
+              className="group bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl border-0 px-8 py-3 rounded-full"
             >
-              <a href="#contact">Get in Touch</a>
+              <a href="#contact" className="flex items-center gap-3">
+                <MessageCircle className="w-5 h-5 group-hover:animate-bounce" />
+                Let's Connect
+              </a>
             </Button>
             <Button 
               asChild 
               size="lg" 
-              variant="outline"
-              className="border-white text-white hover:bg-white/10 transition-all duration-300 transform hover:scale-105 glowing-border"
+              className="group bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white/20 hover:border-white/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl px-8 py-3 rounded-full"
             >
-              <a href="#about">Discover More</a>
+              <a href="#about" className="flex items-center gap-3">
+                <User className="w-5 h-5 group-hover:animate-pulse" />
+                Learn More
+              </a>
             </Button>
           </div>
         </div>
