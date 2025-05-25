@@ -6,41 +6,37 @@ import { Button } from "@/components/ui/button";
 const HeroSection = () => {
   const taglines = [
     "Dream Big, Lead Bold",
+    "Code the Future",
     "Innovate with Purpose",
-    "Code the Future Today",
-    "Transform Ideas into Reality",
-    "Excellence Through Technology"
-  ];
-  
-  const quotes = [
-    "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-    "The only way to do great work is to love what you do.",
-    "Innovation distinguishes between a leader and a follower.",
-    "The future belongs to those who believe in the beauty of their dreams.",
-    "Technology is a tool. In terms of getting the kids working together and motivating them, the teacher is the most important."
+    "Build Tomorrow Today",
+    "Transform Ideas into Reality"
   ];
   
   const [currentTagline, setCurrentTagline] = useState("");
-  const [currentQuote, setCurrentQuote] = useState("");
   const [taglineIndex, setTaglineIndex] = useState(0);
-  const [quoteIndex, setQuoteIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
-  const [quoteCharIndex, setQuoteCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isQuoteDeleting, setIsQuoteDeleting] = useState(false);
-  const [showQuote, setShowQuote] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
-  // Tagline animation
+  // Realistic typing animation with variable speeds
   useEffect(() => {
-    const typeSpeed = isDeleting ? 30 : 80;
-    const pauseTime = isDeleting ? 500 : 2500;
-
-    if (!isDeleting && charIndex === taglines[taglineIndex].length) {
-      setTimeout(() => {
+    const currentText = taglines[taglineIndex];
+    
+    if (isPaused) {
+      const pauseTimer = setTimeout(() => {
+        setIsPaused(false);
         setIsDeleting(true);
-        // Start quote animation after tagline is complete
-        if (!showQuote) setShowQuote(true);
-      }, pauseTime);
+      }, 2000);
+      return () => clearTimeout(pauseTimer);
+    }
+
+    // Variable typing speeds for more realistic effect
+    const typeSpeed = isDeleting 
+      ? Math.random() * 50 + 30  // 30-80ms for deleting
+      : Math.random() * 100 + 80; // 80-180ms for typing
+
+    if (!isDeleting && charIndex === currentText.length) {
+      setIsPaused(true);
       return;
     }
 
@@ -51,42 +47,17 @@ const HeroSection = () => {
     }
 
     const timer = setTimeout(() => {
-      setCurrentTagline(
-        taglines[taglineIndex].substring(0, charIndex + (isDeleting ? -1 : 1))
-      );
-      setCharIndex((prev) => prev + (isDeleting ? -1 : 1));
+      if (isDeleting) {
+        setCurrentTagline(currentText.substring(0, charIndex - 1));
+        setCharIndex(prev => prev - 1);
+      } else {
+        setCurrentTagline(currentText.substring(0, charIndex + 1));
+        setCharIndex(prev => prev + 1);
+      }
     }, typeSpeed);
 
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, taglineIndex, taglines, showQuote]);
-
-  // Quote animation
-  useEffect(() => {
-    if (!showQuote) return;
-
-    const typeSpeed = isQuoteDeleting ? 20 : 50;
-    const pauseTime = isQuoteDeleting ? 1000 : 4000;
-
-    if (!isQuoteDeleting && quoteCharIndex === quotes[quoteIndex].length) {
-      setTimeout(() => setIsQuoteDeleting(true), pauseTime);
-      return;
-    }
-
-    if (isQuoteDeleting && quoteCharIndex === 0) {
-      setIsQuoteDeleting(false);
-      setQuoteIndex((prev) => (prev + 1) % quotes.length);
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      setCurrentQuote(
-        quotes[quoteIndex].substring(0, quoteCharIndex + (isQuoteDeleting ? -1 : 1))
-      );
-      setQuoteCharIndex((prev) => prev + (isQuoteDeleting ? -1 : 1));
-    }, typeSpeed);
-
-    return () => clearTimeout(timer);
-  }, [quoteCharIndex, isQuoteDeleting, quoteIndex, quotes, showQuote]);
+  }, [charIndex, isDeleting, taglineIndex, taglines, isPaused]);
 
   return (
     <section
@@ -128,26 +99,19 @@ const HeroSection = () => {
             Developer & Tech Enthusiast
           </h2>
           
-          {/* Animated Tagline */}
-          <div className="text-2xl md:text-3xl font-bold text-white mb-6 reveal-animation h-12 flex items-center justify-center" style={{"--reveal-delay": "5"} as React.CSSProperties}>
-            <span className="relative">
-              {currentTagline}
-              <span className="animate-pulse text-violet-300 ml-1">|</span>
-            </span>
+          {/* Coding-style Animated Tagline */}
+          <div className="text-2xl md:text-3xl font-bold text-white mb-12 reveal-animation h-12 flex items-center justify-center" style={{"--reveal-delay": "5"} as React.CSSProperties}>
+            <div className="relative font-mono">
+              <span className="text-green-400">&gt;</span>
+              <span className="text-yellow-300 ml-2">echo</span>
+              <span className="text-white ml-2">"</span>
+              <span className="text-cyan-300">{currentTagline}</span>
+              <span className="text-white">"|</span>
+              <span className="animate-pulse text-white bg-white w-0.5 h-6 inline-block ml-1 coding-cursor"></span>
+            </div>
           </div>
           
-          {/* Animated Quote */}
-          <div className="text-base md:text-lg text-blue-100 max-w-3xl mx-auto mb-10 reveal-animation min-h-[3rem] flex items-center justify-center" style={{"--reveal-delay": "6"} as React.CSSProperties}>
-            {showQuote && (
-              <span className="italic font-medium text-center leading-relaxed">
-                "{currentQuote}
-                <span className="animate-pulse text-violet-300">|</span>
-                "
-              </span>
-            )}
-          </div>
-          
-          <div className="flex flex-wrap gap-6 justify-center reveal-animation" style={{"--reveal-delay": "7"} as React.CSSProperties}>
+          <div className="flex flex-wrap gap-6 justify-center reveal-animation" style={{"--reveal-delay": "6"} as React.CSSProperties}>
             <Button 
               asChild 
               size="lg" 
@@ -155,7 +119,7 @@ const HeroSection = () => {
             >
               <a href="#contact" className="flex items-center gap-3 relative z-10">
                 <MessageCircle className="w-5 h-5 group-hover:animate-bounce" />
-                Let's Connect
+                Get In Touch
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-violet-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-full"></div>
               </a>
             </Button>
@@ -166,7 +130,7 @@ const HeroSection = () => {
             >
               <a href="#about" className="flex items-center gap-3 relative z-10">
                 <User className="w-5 h-5 group-hover:animate-pulse" />
-                Discover More
+                Learn More
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full"></div>
               </a>
             </Button>
@@ -200,6 +164,15 @@ const HeroSection = () => {
         .highlight-text {
           text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
           animation: pulse-text 3s infinite alternate;
+        }
+        
+        .coding-cursor {
+          animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
         }
         
         @keyframes light-slide {
