@@ -16,6 +16,16 @@ export interface WebsiteContent {
     careerGoals: string;
     profileImage: string;
   };
+  education: {
+    educationData: Array<{
+      level: string;
+      institution: string;
+      percentage: string;
+      year: string;
+      icon: string;
+      color: string;
+    }>;
+  };
   skills: {
     skills: Array<{
       name: string;

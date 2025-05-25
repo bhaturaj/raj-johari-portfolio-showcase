@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from "react";
-import { X, Settings, User, Code, Briefcase, FileText, Mail, Palette, Lock } from "lucide-react";
+import { X, Settings, User, Code, Briefcase, FileText, Mail, Palette, Lock, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -39,6 +38,15 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
     careerGoals: "",
     profileImage: ""
   });
+
+  const [educationData, setEducationData] = useState<Array<{
+    level: string;
+    institution: string;
+    percentage: string;
+    year: string;
+    icon: string;
+    color: string;
+  }>>([]);
 
   const [skillsData, setSkillsData] = useState<Array<{
     name: string;
@@ -86,6 +94,7 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
     if (content) {
       setHeroData(content.hero);
       setAboutData(content.about);
+      setEducationData(content.education?.educationData || []);
       setSkillsData(content.skills.skills);
       setProjectsData(content.projects);
       setResumeData(content.resume);
@@ -109,6 +118,7 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
       await Promise.all([
         updateContent('hero', heroData),
         updateContent('about', aboutData),
+        updateContent('education', { educationData }),
         updateContent('skills', { skills: skillsData }),
         updateContent('projects', projectsData),
         updateContent('resume', resumeData),
@@ -129,6 +139,28 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
         variant: "destructive",
       });
     }
+  };
+
+  const addNewEducation = () => {
+    const newEducation = {
+      level: "New Degree",
+      institution: "Institution Name",
+      percentage: "0%",
+      year: "Year",
+      icon: "School",
+      color: "from-blue-400 to-indigo-500"
+    };
+    setEducationData([...educationData, newEducation]);
+  };
+
+  const updateEducation = (index: number, field: string, value: string) => {
+    const updatedEducation = [...educationData];
+    updatedEducation[index] = { ...updatedEducation[index], [field]: value };
+    setEducationData(updatedEducation);
+  };
+
+  const removeEducation = (index: number) => {
+    setEducationData(educationData.filter((_, i) => i !== index));
   };
 
   const addNewSkill = () => {
@@ -245,7 +277,7 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
         </DialogHeader>
 
         <Tabs defaultValue="hero" className="w-full">
-          <TabsList className="grid w-full grid-cols-7">
+          <TabsList className="grid w-full grid-cols-8">
             <TabsTrigger value="hero" className="flex items-center gap-1">
               <User className="w-4 h-4" />
               Hero
@@ -253,6 +285,10 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
             <TabsTrigger value="about" className="flex items-center gap-1">
               <User className="w-4 h-4" />
               About
+            </TabsTrigger>
+            <TabsTrigger value="education" className="flex items-center gap-1">
+              <GraduationCap className="w-4 h-4" />
+              Education
             </TabsTrigger>
             <TabsTrigger value="skills" className="flex items-center gap-1">
               <Code className="w-4 h-4" />
@@ -357,6 +393,82 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
                     value={aboutData.profileImage}
                     onChange={(e) => setAboutData({...aboutData, profileImage: e.target.value})}
                   />
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Education Section Tab */}
+          <TabsContent value="education" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex justify-between items-center">
+                  Education Management
+                  <Button onClick={addNewEducation} size="sm">Add Education</Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 max-h-96 overflow-y-auto">
+                  {educationData.map((education, index) => (
+                    <div key={index} className="grid grid-cols-6 gap-2 items-center p-4 border rounded">
+                      <div>
+                        <Label>Level</Label>
+                        <Input
+                          value={education.level}
+                          onChange={(e) => updateEducation(index, 'level', e.target.value)}
+                          placeholder="Degree level"
+                        />
+                      </div>
+                      <div>
+                        <Label>Institution</Label>
+                        <Input
+                          value={education.institution}
+                          onChange={(e) => updateEducation(index, 'institution', e.target.value)}
+                          placeholder="Institution name"
+                        />
+                      </div>
+                      <div>
+                        <Label>Percentage/CGPA</Label>
+                        <Input
+                          value={education.percentage}
+                          onChange={(e) => updateEducation(index, 'percentage', e.target.value)}
+                          placeholder="Score"
+                        />
+                      </div>
+                      <div>
+                        <Label>Year</Label>
+                        <Input
+                          value={education.year}
+                          onChange={(e) => updateEducation(index, 'year', e.target.value)}
+                          placeholder="Year/Status"
+                        />
+                      </div>
+                      <div>
+                        <Label>Icon</Label>
+                        <Input
+                          value={education.icon}
+                          onChange={(e) => updateEducation(index, 'icon', e.target.value)}
+                          placeholder="Icon name"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <Label>Color</Label>
+                        <Input
+                          value={education.color}
+                          onChange={(e) => updateEducation(index, 'color', e.target.value)}
+                          placeholder="Gradient classes"
+                          className="text-xs"
+                        />
+                        <Button 
+                          onClick={() => removeEducation(index)} 
+                          variant="destructive" 
+                          size="sm"
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>

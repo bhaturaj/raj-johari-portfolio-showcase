@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Mail, Phone, Linkedin, Github, Instagram } from "lucide-react";
+import { Mail, Phone, Linkedin, Github, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -89,32 +89,35 @@ const ContactSection = () => {
                 </div>
               </div>
               
-              <h4 className="text-lg font-medium mt-8 mb-4">Social Links</h4>
+              <h4 className="text-lg font-medium mt-8 mb-4">Connect With Me</h4>
               
               <div className="flex gap-4">
                 <a 
                   href="https://www.linkedin.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="social-icon bg-gray-800 text-white hover:bg-blue-600"
+                  className="group relative w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-700 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-blue-500/25"
                 >
-                  <Linkedin className="w-5 h-5" />
+                  <Linkedin className="w-6 h-6 text-white group-hover:animate-pulse" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                 </a>
                 <a 
                   href="https://github.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="social-icon bg-gray-800 text-white hover:bg-gray-600"
+                  className="group relative w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-gray-500/25"
                 >
-                  <Github className="w-5 h-5" />
+                  <Github className="w-6 h-6 text-white group-hover:animate-pulse" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-600 to-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                 </a>
                 <a 
-                  href="https://www.instagram.com/" 
+                  href="https://leetcode.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="social-icon bg-gray-800 text-white hover:bg-pink-600"
+                  className="group relative w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-orange-500/25"
                 >
-                  <Instagram className="w-5 h-5" />
+                  <Code className="w-6 h-6 text-white group-hover:animate-pulse" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                 </a>
               </div>
             </div>

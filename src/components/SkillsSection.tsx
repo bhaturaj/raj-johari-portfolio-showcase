@@ -36,6 +36,32 @@ const SkillsSection = () => {
     "Framework": "from-purple-500 to-fuchsia-500"
   };
 
+  // Programming language symbols
+  const languageSymbols = {
+    "C": "⚡",
+    "C++": "⚡",
+    "Java": "☕",
+    "Python": "🐍",
+    "JavaScript": "🟨",
+    "TypeScript": "🔷",
+    "HTML": "🌐",
+    "CSS": "🎨",
+    "React": "⚛️",
+    "Node.js": "🟢",
+    "DSA": "🧠",
+    "DBMS": "🗄️",
+    "SQL": "🗃️",
+    "AI": "🤖",
+    "MEAN Stack": "🌐",
+    ".NET": "🔧",
+    "MongoDB": "🍃",
+    "Express": "🚂",
+    "Angular": "🅰️",
+    "Git": "📝",
+    "Docker": "🐳",
+    "AWS": "☁️"
+  };
+
   return (
     <section id="skills" className="section-padding bg-skills-gradient relative overflow-hidden">
       {/* Background decorative elements */}
@@ -85,9 +111,14 @@ const SkillsSection = () => {
                             className="skill-pill hover:shadow-lg hover:shadow-purple-200/30 transition-all flex-shrink-0 w-64"
                           >
                             <div className="flex flex-col items-center w-full">
-                              <span className="text-violet-800 font-medium mb-2">
-                                {skill.name}
-                              </span>
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="text-2xl">
+                                  {languageSymbols[skill.name] || skill.icon || "💻"}
+                                </span>
+                                <span className="text-violet-800 font-medium">
+                                  {skill.name}
+                                </span>
+                              </div>
                               <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
                                 <div
                                   className={`bg-gradient-to-r ${categoryColors[category] || "from-violet-500 to-indigo-500"} h-2.5 rounded-full relative`}
