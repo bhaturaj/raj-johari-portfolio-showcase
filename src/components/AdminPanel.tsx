@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Settings, User, Code, Briefcase, FileText, Mail, Palette, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -41,6 +40,34 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
     profileImage: ""
   });
 
+  // Default education data
+  const defaultEducationData = [
+    {
+      level: "Bachelor of Technology (B.Tech)",
+      institution: "SRM Institute of Science and Technology",
+      percentage: "8.5 CGPA",
+      year: "2021-2025",
+      icon: "University",
+      color: "from-blue-400 to-indigo-500"
+    },
+    {
+      level: "Higher Secondary (12th)",
+      institution: "DAV Public School",
+      percentage: "92%",
+      year: "2021",
+      icon: "School",
+      color: "from-purple-400 to-pink-500"
+    },
+    {
+      level: "Secondary School (10th)",
+      institution: "DAV Public School",
+      percentage: "95%",
+      year: "2019",
+      icon: "GraduationCap",
+      color: "from-green-400 to-blue-500"
+    }
+  ];
+
   const [educationData, setEducationData] = useState<Array<{
     level: string;
     institution: string;
@@ -48,7 +75,7 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
     year: string;
     icon: string;
     color: string;
-  }>>([]);
+  }>>(defaultEducationData);
 
   const [skillsData, setSkillsData] = useState<Array<{
     name: string;
@@ -96,7 +123,10 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
     if (content) {
       setHeroData(content.hero);
       setAboutData(content.about);
-      setEducationData(content.education?.educationData || []);
+      // Use existing education data or default data
+      setEducationData(content.education?.educationData?.length > 0 
+        ? content.education.educationData 
+        : defaultEducationData);
       setSkillsData(content.skills.skills);
       setProjectsData(content.projects);
       setResumeData(content.resume);

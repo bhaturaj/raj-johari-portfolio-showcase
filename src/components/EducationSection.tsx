@@ -21,7 +21,38 @@ const EducationSection = () => {
     );
   }
 
-  const educationData = content?.education?.educationData || [];
+  // Default education data if none exists in database
+  const defaultEducationData = [
+    {
+      level: "Bachelor of Technology (B.Tech)",
+      institution: "SRM Institute of Science and Technology",
+      percentage: "8.5 CGPA",
+      year: "2021-2025",
+      icon: "University",
+      color: "from-blue-400 to-indigo-500"
+    },
+    {
+      level: "Higher Secondary (12th)",
+      institution: "DAV Public School",
+      percentage: "92%",
+      year: "2021",
+      icon: "School",
+      color: "from-purple-400 to-pink-500"
+    },
+    {
+      level: "Secondary School (10th)",
+      institution: "DAV Public School",
+      percentage: "95%",
+      year: "2019",
+      icon: "GraduationCap",
+      color: "from-green-400 to-blue-500"
+    }
+  ];
+
+  const educationData = content?.education?.educationData?.length > 0 
+    ? content.education.educationData 
+    : defaultEducationData;
+
   const iconMap = {
     "School": School,
     "GraduationCap": GraduationCap,
