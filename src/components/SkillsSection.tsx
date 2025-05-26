@@ -128,8 +128,12 @@ const SkillsSection = () => {
                                     alt={skill.name}
                                     className="w-8 h-8 group-hover:scale-110 transition-transform duration-300"
                                     onError={(e) => {
-                                      e.currentTarget.style.display = 'none';
-                                      e.currentTarget.nextElementSibling.style.display = 'block';
+                                      const target = e.currentTarget as HTMLImageElement;
+                                      target.style.display = 'none';
+                                      const nextElement = target.nextElementSibling as HTMLElement;
+                                      if (nextElement) {
+                                        nextElement.style.display = 'block';
+                                      }
                                     }}
                                   />
                                 ) : null}
@@ -170,7 +174,8 @@ const SkillsSection = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>
+        {`
         @keyframes scroll-left {
           0% {
             transform: translateX(0);
@@ -213,7 +218,8 @@ const SkillsSection = () => {
         .skill-card:hover .animate-pulse {
           animation-duration: 0.5s;
         }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };
