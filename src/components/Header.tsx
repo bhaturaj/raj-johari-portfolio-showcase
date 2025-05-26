@@ -39,8 +39,16 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-6">
-        <a href="#home" className="text-xl font-bold font-heading text-primary">
+        <a href="#home" className="text-xl font-bold font-heading text-primary flex items-center gap-2">
           Bhaturaj<span className="text-foreground">Johari</span>
+          <svg 
+            className="w-6 h-6 text-primary animate-pulse" 
+            fill="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path d="M6 3h2l2 6 2-6h2l2 6 2-6h2l-3 9-3-9-3 9z"/>
+            <path d="M12 12l-3 9-3-9 3-3 3 3z"/>
+          </svg>
         </a>
 
         {/* Desktop Menu */}

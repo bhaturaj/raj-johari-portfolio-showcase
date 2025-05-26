@@ -2,34 +2,31 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, School, University } from "lucide-react";
+import { useWebsiteContent } from "@/hooks/useWebsiteContent";
 
 const EducationSection = () => {
-  const educationData = [
-    {
-      level: "SSC (Secondary School Certificate)",
-      institution: "S A Mission English Medium School",
-      percentage: "81.20%",
-      year: "Completed",
-      icon: School,
-      color: "from-green-400 to-emerald-500"
-    },
-    {
-      level: "HSC (Higher Secondary Certificate)",
-      institution: "New High School and Junior College",
-      percentage: "79.33%",
-      year: "Completed",
-      icon: GraduationCap,
-      color: "from-blue-400 to-indigo-500"
-    },
-    {
-      level: "B.Tech (Information Technology)",
-      institution: "Parul University, Vadodara, Gujarat",
-      percentage: "CGPA 6.32",
-      year: "Currently Pursuing",
-      icon: University,
-      color: "from-purple-400 to-violet-500"
-    }
-  ];
+  const { content, loading } = useWebsiteContent();
+
+  if (loading) {
+    return (
+      <section id="education" className="section-padding relative min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-blue-900 overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Education</h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-blue-400 to-indigo-500 mx-auto"></div>
+            <p className="text-gray-300 mt-4">Loading...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const educationData = content?.education?.educationData || [];
+  const iconMap = {
+    "School": School,
+    "GraduationCap": GraduationCap,
+    "University": University
+  };
 
   return (
     <section id="education" className="section-padding relative min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-blue-900 overflow-hidden">
@@ -58,7 +55,7 @@ const EducationSection = () => {
         <div className="max-w-4xl mx-auto">
           <div className="grid gap-8">
             {educationData.map((edu, index) => {
-              const Icon = edu.icon;
+              const Icon = iconMap[edu.icon as keyof typeof iconMap] || School;
               return (
                 <Card 
                   key={index} 
