@@ -103,12 +103,12 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
   });
 
   const [contactData, setContactData] = useState({
-    email: "",
-    phone: "",
+    email: "johariraj70@gmail.com",
+    phone: "+91 8888176317",
     socialLinks: {
-      linkedin: "",
-      github: "",
-      leetcode: ""
+      linkedin: "https://www.linkedin.com/in/bhaturaj-johari-74b18124a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      github: "https://github.com/bhaturaj",
+      leetcode: "https://leetcode.com/u/raj_johari_4141/"
     }
   });
 

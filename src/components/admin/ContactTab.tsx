@@ -32,6 +32,7 @@ const ContactTab = ({ contactData, setContactData }: ContactTabProps) => {
             id="contact-email"
             value={contactData.email}
             onChange={(e) => setContactData({...contactData, email: e.target.value})}
+            placeholder="johariraj70@gmail.com"
           />
         </div>
         <div>
@@ -40,6 +41,7 @@ const ContactTab = ({ contactData, setContactData }: ContactTabProps) => {
             id="contact-phone"
             value={contactData.phone}
             onChange={(e) => setContactData({...contactData, phone: e.target.value})}
+            placeholder="+91 8888176317"
           />
         </div>
         <div>
@@ -51,6 +53,7 @@ const ContactTab = ({ contactData, setContactData }: ContactTabProps) => {
               ...contactData, 
               socialLinks: {...contactData.socialLinks, linkedin: e.target.value}
             })}
+            placeholder="https://www.linkedin.com/in/bhaturaj-johari-74b18124a"
           />
         </div>
         <div>
@@ -62,6 +65,7 @@ const ContactTab = ({ contactData, setContactData }: ContactTabProps) => {
               ...contactData, 
               socialLinks: {...contactData.socialLinks, github: e.target.value}
             })}
+            placeholder="https://github.com/bhaturaj"
           />
         </div>
         <div>
@@ -73,6 +77,7 @@ const ContactTab = ({ contactData, setContactData }: ContactTabProps) => {
               ...contactData, 
               socialLinks: {...contactData.socialLinks, leetcode: e.target.value}
             })}
+            placeholder="https://leetcode.com/u/raj_johari_4141/"
           />
         </div>
       </CardContent>

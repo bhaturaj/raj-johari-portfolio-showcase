@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
+import { useWebsiteContent } from "@/hooks/useWebsiteContent";
 
 type FormData = {
   name: string;
@@ -17,6 +18,7 @@ type FormData = {
 const ContactSection = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { content, loading } = useWebsiteContent();
   
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
   
@@ -24,22 +26,21 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Create a mailto link with form data
+      // Use email from content or fallback to default
+      const email = content?.contact?.email || "johariraj70@gmail.com";
+      
       const subject = encodeURIComponent(data.subject);
       const body = encodeURIComponent(
         `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`
       );
       
-      // Open email client with pre-filled data
-      window.location.href = `mailto:johariraj70@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
       
-      // Show success message
       toast({
         title: "Message prepared!",
         description: "Your email client has been opened with your message.",
       });
       
-      // Reset the form
       reset();
     } catch (error) {
       console.error("Error:", error);
@@ -50,6 +51,17 @@ const ContactSection = () => {
       });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  // Use content data or fallback to default values
+  const contactInfo = {
+    email: content?.contact?.email || "johariraj70@gmail.com",
+    phone: content?.contact?.phone || "+91 8888176317",
+    socialLinks: {
+      linkedin: content?.contact?.socialLinks?.linkedin || "https://www.linkedin.com/in/bhaturaj-johari-74b18124a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      github: content?.contact?.socialLinks?.github || "https://github.com/bhaturaj",
+      leetcode: content?.contact?.socialLinks?.leetcode || "https://leetcode.com/u/raj_johari_4141/"
     }
   };
 
@@ -75,7 +87,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Email</p>
-                  <p className="font-medium">johariraj70@gmail.com</p>
+                  <p className="font-medium">{contactInfo.email}</p>
                 </div>
               </div>
               
@@ -85,7 +97,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Phone</p>
-                  <p className="font-medium">+91 8888176317</p>
+                  <p className="font-medium">{contactInfo.phone}</p>
                 </div>
               </div>
               
@@ -93,7 +105,7 @@ const ContactSection = () => {
               
               <div className="flex gap-4">
                 <a 
-                  href="https://www.linkedin.com/" 
+                  href={contactInfo.socialLinks.linkedin}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="group relative w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-700 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-blue-500/25"
@@ -102,7 +114,7 @@ const ContactSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                 </a>
                 <a 
-                  href="https://github.com/" 
+                  href={contactInfo.socialLinks.github}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="group relative w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-gray-500/25"
@@ -111,7 +123,7 @@ const ContactSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-600 to-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                 </a>
                 <a 
-                  href="https://leetcode.com/" 
+                  href={contactInfo.socialLinks.leetcode}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="group relative w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-orange-500/25"
