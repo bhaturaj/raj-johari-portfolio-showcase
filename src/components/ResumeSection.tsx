@@ -3,9 +3,44 @@ import React from "react";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useWebsiteContent } from "@/hooks/useWebsiteContent";
+import { useToast } from "@/hooks/use-toast";
 
 const ResumeSection = () => {
   const { content, loading } = useWebsiteContent();
+  const { toast } = useToast();
+
+  const handleDownload = () => {
+    if (!content?.resume?.downloadLink || content.resume.downloadLink === "#") {
+      toast({
+        title: "Resume not available",
+        description: "The resume file is not available for download at the moment.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Create a temporary link element
+      const link = document.createElement('a');
+      link.href = content.resume.downloadLink;
+      link.download = content.resume.title || 'Resume.pdf';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      toast({
+        title: "Download started",
+        description: "Your resume download has been initiated.",
+      });
+    } catch (error) {
+      toast({
+        title: "Download failed",
+        description: "There was an error downloading the resume. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   if (loading) {
     return (
@@ -32,6 +67,7 @@ const ResumeSection = () => {
   }
 
   const { title, description, downloadLink } = content.resume;
+  const isDownloadAvailable = downloadLink && downloadLink !== "#";
 
   return (
     <section id="resume" className="section-padding relative min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 overflow-hidden">
@@ -58,23 +94,23 @@ const ResumeSection = () => {
           <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl p-8 mb-8 hover:bg-white/10 transition-all duration-300">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="text-center md:text-left">
-                <h3 className="text-xl font-bold mb-2 text-white">{title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-white">{title || "My Professional Resume"}</h3>
                 <p className="text-gray-300">
-                  {description}
+                  {description || "A comprehensive overview of my skills, experience, and qualifications"}
                 </p>
               </div>
               
               <Button 
-                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-                onClick={() => {
-                  if (downloadLink && downloadLink !== "#") {
-                    window.open(downloadLink, "_blank");
-                  }
-                }}
-                disabled={!downloadLink || downloadLink === "#"}
+                className={`flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 ${
+                  isDownloadAvailable 
+                    ? 'hover:scale-105 hover:shadow-lg' 
+                    : 'opacity-50 cursor-not-allowed'
+                }`}
+                onClick={handleDownload}
+                disabled={!isDownloadAvailable}
               >
                 <Download className="w-4 h-4" />
-                Download Resume
+                {isDownloadAvailable ? 'Download Resume' : 'Resume Unavailable'}
               </Button>
             </div>
           </div>
@@ -83,6 +119,14 @@ const ResumeSection = () => {
             The resume includes my education history, technical skills, projects, and professional interests.
             <br />Please feel free to reach out if you need any additional information.
           </p>
+          
+          {!isDownloadAvailable && (
+            <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+              <p className="text-yellow-300 text-sm">
+                Resume download is currently not available. Please contact me directly for my latest resume.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>

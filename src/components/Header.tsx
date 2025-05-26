@@ -39,16 +39,37 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-6">
-        <a href="#home" className="text-xl font-bold font-heading text-primary flex items-center gap-2">
+        <a href="#home" className="text-xl font-bold font-heading text-primary flex items-center gap-3">
           Bhaturaj<span className="text-foreground">Johari</span>
-          <svg 
-            className="w-6 h-6 text-primary animate-pulse" 
-            fill="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path d="M6 3h2l2 6 2-6h2l2 6 2-6h2l-3 9-3-9-3 9z"/>
-            <path d="M12 12l-3 9-3-9 3-3 3 3z"/>
-          </svg>
+          <div className="relative">
+            <svg 
+              className="w-8 h-8 text-primary animate-spin" 
+              style={{
+                animationDuration: '3s',
+                filter: 'drop-shadow(0 0 10px rgba(123, 97, 255, 0.6))'
+              }}
+              viewBox="0 0 24 24" 
+              fill="currentColor"
+            >
+              {/* Diamond shape with facets */}
+              <path d="M12 2L4 8L12 22L20 8Z" fill="url(#diamondGradient)" stroke="currentColor" strokeWidth="0.5"/>
+              <path d="M4 8L12 10L20 8L12 2Z" fill="rgba(255,255,255,0.3)"/>
+              <path d="M4 8L8 12L12 10Z" fill="rgba(255,255,255,0.1)"/>
+              <path d="M20 8L16 12L12 10Z" fill="rgba(255,255,255,0.1)"/>
+              <path d="M8 12L12 22L4 8Z" fill="rgba(0,0,0,0.1)"/>
+              <path d="M16 12L12 22L20 8Z" fill="rgba(0,0,0,0.1)"/>
+              <defs>
+                <linearGradient id="diamondGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="rgba(255,255,255,0.9)" />
+                  <stop offset="30%" stopColor="rgba(123, 97, 255, 0.8)" />
+                  <stop offset="70%" stopColor="rgba(139, 92, 246, 0.9)" />
+                  <stop offset="100%" stopColor="rgba(99, 102, 241, 1)" />
+                </linearGradient>
+              </defs>
+            </svg>
+            {/* Glow effect */}
+            <div className="absolute inset-0 w-8 h-8 bg-primary/30 rounded-full blur-md animate-pulse"></div>
+          </div>
         </a>
 
         {/* Desktop Menu */}
