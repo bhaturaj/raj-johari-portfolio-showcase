@@ -43,28 +43,33 @@ const Header = () => {
           Bhaturaj<span className="text-foreground">Johari</span>
           <div className="relative">
             <svg 
-              className="w-6 h-6 text-primary" 
+              className="w-8 h-8 text-primary" 
               style={{
-                animation: 'rotate-horizontal 4s linear infinite',
-                filter: 'drop-shadow(0 0 8px rgba(123, 97, 255, 0.7))'
+                animation: 'rotate-horizontal 3s linear infinite',
+                filter: 'drop-shadow(0 0 10px rgba(123, 97, 255, 0.8))'
               }}
               viewBox="0 0 24 24" 
               fill="currentColor"
             >
-              {/* More realistic diamond shape */}
-              <path d="M12 2L6 8L12 22L18 8Z" fill="url(#diamondGradient)" stroke="currentColor" strokeWidth="0.3"/>
-              {/* Top facet */}
-              <path d="M6 8L12 6L18 8L12 2Z" fill="rgba(255,255,255,0.4)"/>
-              {/* Left facet */}
-              <path d="M6 8L9 14L12 6Z" fill="rgba(255,255,255,0.2)"/>
-              {/* Right facet */}
-              <path d="M18 8L15 14L12 6Z" fill="rgba(255,255,255,0.2)"/>
-              {/* Bottom left */}
-              <path d="M6 8L9 14L12 22Z" fill="rgba(0,0,0,0.1)"/>
-              {/* Bottom right */}
-              <path d="M18 8L15 14L12 22Z" fill="rgba(0,0,0,0.1)"/>
-              {/* Center shine */}
-              <path d="M10 6L12 4L14 6L12 8Z" fill="rgba(255,255,255,0.6)"/>
+              {/* Diamond shape with better proportions */}
+              <path d="M12 2L5 9L12 22L19 9Z" fill="url(#diamondGradient)" stroke="currentColor" strokeWidth="0.5"/>
+              
+              {/* Top facets */}
+              <path d="M5 9L12 4L19 9L12 2Z" fill="rgba(255,255,255,0.6)"/>
+              <path d="M8 9L12 5L16 9L12 4Z" fill="rgba(255,255,255,0.8)"/>
+              
+              {/* Side facets */}
+              <path d="M5 9L9 15L12 4Z" fill="rgba(255,255,255,0.3)"/>
+              <path d="M19 9L15 15L12 4Z" fill="rgba(255,255,255,0.3)"/>
+              
+              {/* Bottom facets */}
+              <path d="M5 9L9 15L12 22Z" fill="rgba(0,0,0,0.2)"/>
+              <path d="M19 9L15 15L12 22Z" fill="rgba(0,0,0,0.2)"/>
+              <path d="M9 15L12 18L15 15L12 22Z" fill="rgba(0,0,0,0.3)"/>
+              
+              {/* Center highlight */}
+              <path d="M10 5L12 3L14 5L12 7Z" fill="rgba(255,255,255,0.9)"/>
+              
               <defs>
                 <linearGradient id="diamondGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="rgba(255,255,255,0.9)" />
@@ -74,9 +79,11 @@ const Header = () => {
                 </linearGradient>
               </defs>
             </svg>
-            {/* Enhanced glow effect */}
-            <div className="absolute inset-0 w-6 h-6 bg-primary/40 rounded-full blur-sm animate-pulse"></div>
-            <div className="absolute inset-0 w-6 h-6 bg-primary/20 rounded-full blur-md animate-pulse" style={{animationDelay: "0.5s"}}></div>
+            
+            {/* Enhanced glow effects */}
+            <div className="absolute inset-0 w-8 h-8 bg-primary/50 rounded-full blur-sm animate-pulse"></div>
+            <div className="absolute inset-0 w-8 h-8 bg-primary/30 rounded-full blur-md animate-pulse" style={{animationDelay: "0.5s"}}></div>
+            <div className="absolute inset-0 w-8 h-8 bg-primary/20 rounded-full blur-lg animate-pulse" style={{animationDelay: "1s"}}></div>
           </div>
         </a>
 
@@ -126,7 +133,7 @@ const Header = () => {
         </div>
       )}
       
-      <style jsx>{`
+      <style>{`
         @keyframes rotate-horizontal {
           0% {
             transform: rotateY(0deg);

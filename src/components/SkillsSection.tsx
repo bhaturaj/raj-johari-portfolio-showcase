@@ -166,15 +166,15 @@ const SkillsSection = () => {
                 </div>
                 
                 {/* Enhanced gradient fade effects on both sides */}
-                <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent pointer-events-none z-10"></div>
-                <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-slate-900 via-slate-900/80 to-transparent pointer-events-none z-10"></div>
+                <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent pointer-events-none z-10"></div>
+                <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-slate-900 via-slate-900/90 to-transparent pointer-events-none z-10"></div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes scroll-left {
           0% {
             transform: translateX(0);
