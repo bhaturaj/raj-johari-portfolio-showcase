@@ -43,32 +43,40 @@ const Header = () => {
           Bhaturaj<span className="text-foreground">Johari</span>
           <div className="relative">
             <svg 
-              className="w-8 h-8 text-primary animate-spin" 
+              className="w-6 h-6 text-primary" 
               style={{
-                animationDuration: '3s',
-                filter: 'drop-shadow(0 0 10px rgba(123, 97, 255, 0.6))'
+                animation: 'rotate-horizontal 4s linear infinite',
+                filter: 'drop-shadow(0 0 8px rgba(123, 97, 255, 0.7))'
               }}
               viewBox="0 0 24 24" 
               fill="currentColor"
             >
-              {/* Diamond shape with facets */}
-              <path d="M12 2L4 8L12 22L20 8Z" fill="url(#diamondGradient)" stroke="currentColor" strokeWidth="0.5"/>
-              <path d="M4 8L12 10L20 8L12 2Z" fill="rgba(255,255,255,0.3)"/>
-              <path d="M4 8L8 12L12 10Z" fill="rgba(255,255,255,0.1)"/>
-              <path d="M20 8L16 12L12 10Z" fill="rgba(255,255,255,0.1)"/>
-              <path d="M8 12L12 22L4 8Z" fill="rgba(0,0,0,0.1)"/>
-              <path d="M16 12L12 22L20 8Z" fill="rgba(0,0,0,0.1)"/>
+              {/* More realistic diamond shape */}
+              <path d="M12 2L6 8L12 22L18 8Z" fill="url(#diamondGradient)" stroke="currentColor" strokeWidth="0.3"/>
+              {/* Top facet */}
+              <path d="M6 8L12 6L18 8L12 2Z" fill="rgba(255,255,255,0.4)"/>
+              {/* Left facet */}
+              <path d="M6 8L9 14L12 6Z" fill="rgba(255,255,255,0.2)"/>
+              {/* Right facet */}
+              <path d="M18 8L15 14L12 6Z" fill="rgba(255,255,255,0.2)"/>
+              {/* Bottom left */}
+              <path d="M6 8L9 14L12 22Z" fill="rgba(0,0,0,0.1)"/>
+              {/* Bottom right */}
+              <path d="M18 8L15 14L12 22Z" fill="rgba(0,0,0,0.1)"/>
+              {/* Center shine */}
+              <path d="M10 6L12 4L14 6L12 8Z" fill="rgba(255,255,255,0.6)"/>
               <defs>
                 <linearGradient id="diamondGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="rgba(255,255,255,0.9)" />
-                  <stop offset="30%" stopColor="rgba(123, 97, 255, 0.8)" />
-                  <stop offset="70%" stopColor="rgba(139, 92, 246, 0.9)" />
+                  <stop offset="20%" stopColor="rgba(123, 97, 255, 0.9)" />
+                  <stop offset="60%" stopColor="rgba(139, 92, 246, 1)" />
                   <stop offset="100%" stopColor="rgba(99, 102, 241, 1)" />
                 </linearGradient>
               </defs>
             </svg>
-            {/* Glow effect */}
-            <div className="absolute inset-0 w-8 h-8 bg-primary/30 rounded-full blur-md animate-pulse"></div>
+            {/* Enhanced glow effect */}
+            <div className="absolute inset-0 w-6 h-6 bg-primary/40 rounded-full blur-sm animate-pulse"></div>
+            <div className="absolute inset-0 w-6 h-6 bg-primary/20 rounded-full blur-md animate-pulse" style={{animationDelay: "0.5s"}}></div>
           </div>
         </a>
 
@@ -117,6 +125,17 @@ const Header = () => {
           </nav>
         </div>
       )}
+      
+      <style jsx>{`
+        @keyframes rotate-horizontal {
+          0% {
+            transform: rotateY(0deg);
+          }
+          100% {
+            transform: rotateY(360deg);
+          }
+        }
+      `}</style>
     </header>
   );
 };

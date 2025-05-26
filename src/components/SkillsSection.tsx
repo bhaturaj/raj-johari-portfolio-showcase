@@ -97,7 +97,7 @@ const SkillsSection = () => {
                 <div className={`w-2 h-8 bg-gradient-to-b ${categoryColors[category] || "from-violet-500 to-indigo-500"} rounded-full`}></div>
               </h3>
               
-              {/* Enhanced scrolling container */}
+              {/* Enhanced scrolling container with blur on both sides */}
               <div className="relative">
                 <div 
                   className={`flex gap-6 ${
@@ -165,17 +165,16 @@ const SkillsSection = () => {
                   ))}
                 </div>
                 
-                {/* Gradient fade effects */}
-                <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-slate-900 to-transparent pointer-events-none z-10"></div>
-                <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10"></div>
+                {/* Enhanced gradient fade effects on both sides */}
+                <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent pointer-events-none z-10"></div>
+                <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-slate-900 via-slate-900/80 to-transparent pointer-events-none z-10"></div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <style>
-        {`
+      <style jsx>{`
         @keyframes scroll-left {
           0% {
             transform: translateX(0);
@@ -218,8 +217,7 @@ const SkillsSection = () => {
         .skill-card:hover .animate-pulse {
           animation-duration: 0.5s;
         }
-        `}
-      </style>
+      `}</style>
     </section>
   );
 };
