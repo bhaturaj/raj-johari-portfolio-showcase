@@ -66,8 +66,92 @@ export interface WebsiteContent {
   };
 }
 
+const getDefaultContent = (): WebsiteContent => ({
+  hero: {
+    name: "Bhaturaj Johari",
+    role: "Full Stack Developer",
+    slogan: "Creating innovative solutions with code"
+  },
+  about: {
+    dateOfBirth: "April 15, 2003",
+    education: "B.Tech Computer Science",
+    passion: "Technology & Innovation",
+    careerGoals: "Software Engineer",
+    profileImage: "/lovable-uploads/e1d62208-1d51-40fa-85df-f10f02304d02.png"
+  },
+  education: {
+    educationData: [
+      {
+        level: "Bachelor of Technology (B.Tech)",
+        institution: "SRM Institute of Science and Technology",
+        percentage: "8.5 CGPA",
+        year: "2021-2025",
+        icon: "University",
+        color: "from-blue-400 to-indigo-500"
+      },
+      {
+        level: "Higher Secondary (12th)",
+        institution: "DAV Public School",
+        percentage: "92%",
+        year: "2021",
+        icon: "School",
+        color: "from-purple-400 to-pink-500"
+      },
+      {
+        level: "Secondary School (10th)",
+        institution: "DAV Public School",
+        percentage: "95%",
+        year: "2019",
+        icon: "GraduationCap",
+        color: "from-green-400 to-blue-500"
+      }
+    ]
+  },
+  skills: {
+    skills: [
+      { name: "React", category: "Frontend", level: 90, icon: "⚛️" },
+      { name: "JavaScript", category: "Languages", level: 85, icon: "📜" },
+      { name: "Node.js", category: "Backend", level: 80, icon: "🚀" },
+      { name: "Python", category: "Languages", level: 75, icon: "🐍" },
+      { name: "SQL", category: "Database", level: 70, icon: "🗄️" }
+    ]
+  },
+  projects: {
+    title: "My Projects",
+    description: "Here are some of the projects I've worked on",
+    projects: [
+      {
+        id: 1,
+        title: "City Explorer App",
+        description: "An interactive application that helps users navigate and discover points of interest in different cities.",
+        technologies: ["React", "Node.js", "MongoDB", "Google Maps API"],
+        link: "#"
+      }
+    ]
+  },
+  resume: {
+    title: "My Resume",
+    description: "Download my professional resume",
+    downloadLink: ""
+  },
+  contact: {
+    email: "johariraj70@gmail.com",
+    phone: "+91 8888176317",
+    socialLinks: {
+      linkedin: "https://www.linkedin.com/in/bhaturaj-johari-74b18124a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      github: "https://github.com/bhaturaj",
+      leetcode: "https://leetcode.com/u/raj_johari_4141/"
+    }
+  },
+  theme: {
+    primaryColor: "#3B82F6",
+    secondaryColor: "#8B5CF6",
+    accentColor: "#10B981"
+  }
+});
+
 export const useWebsiteContent = () => {
-  const [content, setContent] = useState<WebsiteContent | null>(null);
+  const [content, setContent] = useState<WebsiteContent>(getDefaultContent());
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
@@ -79,10 +163,10 @@ export const useWebsiteContent = () => {
 
       if (error) throw error;
 
-      if (data) {
-        const contentObj: any = {};
+      if (data && data.length > 0) {
+        const contentObj: any = getDefaultContent();
         data.forEach((item) => {
-          contentObj[item.section] = item.content;
+          contentObj[item.section] = { ...contentObj[item.section], ...item.content };
         });
         setContent(contentObj as WebsiteContent);
       }
@@ -112,11 +196,11 @@ export const useWebsiteContent = () => {
 
       if (error) throw error;
 
-      // Update local state
-      setContent(prev => prev ? {
+      // Update local state immediately
+      setContent(prev => ({
         ...prev,
         [section]: newContent
-      } : null);
+      }));
 
       toast({
         title: "Success",
@@ -129,6 +213,7 @@ export const useWebsiteContent = () => {
         description: "Failed to update content",
         variant: "destructive",
       });
+      throw error;
     }
   };
 

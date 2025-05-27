@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { useWebsiteContent } from "@/hooks/useWebsiteContent";
+import { supabase } from "@/integrations/supabase/client";
 
 type FormData = {
   name: string;
@@ -26,24 +27,21 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Use email from content or fallback to default
-      const email = content?.contact?.email || "johariraj70@gmail.com";
-      
-      const subject = encodeURIComponent(data.subject);
-      const body = encodeURIComponent(
-        `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`
-      );
-      
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-      
+      // Send email via edge function
+      const { data: result, error } = await supabase.functions.invoke('send-contact-email', {
+        body: data
+      });
+
+      if (error) throw error;
+
       toast({
-        title: "Message prepared!",
-        description: "Your email client has been opened with your message.",
+        title: "Message sent successfully!",
+        description: "Thank you for your message. I'll get back to you soon.",
       });
       
       reset();
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error sending message:", error);
       toast({
         title: "Error",
         description: "There was a problem sending your message. Please try again.",

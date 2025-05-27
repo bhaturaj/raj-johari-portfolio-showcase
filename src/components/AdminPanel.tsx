@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Settings, User, Code, Briefcase, FileText, Mail, Palette, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,7 @@ interface AdminPanelProps {
 
 const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { content, loading, updateContent } = useWebsiteContent();
+  const { content, loading, updateContent, refreshContent } = useWebsiteContent();
   const { toast } = useToast();
 
   // Local state for editing
@@ -121,9 +122,9 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
   // Load content into local state when content changes
   useEffect(() => {
     if (content) {
+      console.log('Loading content into admin panel:', content);
       setHeroData(content.hero);
       setAboutData(content.about);
-      // Use existing education data or default data
       setEducationData(content.education?.educationData?.length > 0 
         ? content.education.educationData 
         : defaultEducationData);
@@ -141,6 +142,17 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
 
   const handleSaveChanges = async () => {
     try {
+      console.log('Saving changes...', {
+        heroData,
+        aboutData,
+        educationData,
+        skillsData,
+        projectsData,
+        resumeData,
+        contactData,
+        themeData
+      });
+
       await Promise.all([
         updateContent('hero', heroData),
         updateContent('about', aboutData),
@@ -152,6 +164,9 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
         updateContent('theme', themeData)
       ]);
       
+      // Refresh content to make sure it's updated
+      await refreshContent();
+      
       toast({
         title: "Success",
         description: "All changes saved successfully",
@@ -159,6 +174,7 @@ const AdminPanel = ({ isOpen, onClose }: AdminPanelProps) => {
       
       onClose();
     } catch (error) {
+      console.error('Error saving changes:', error);
       toast({
         title: "Error",
         description: "Failed to save some changes",
