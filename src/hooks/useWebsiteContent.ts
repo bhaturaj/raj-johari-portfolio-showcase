@@ -164,11 +164,16 @@ export const useWebsiteContent = () => {
       if (error) throw error;
 
       if (data && data.length > 0) {
-        const contentObj: any = getDefaultContent();
+        const contentObj = getDefaultContent();
         data.forEach((item) => {
-          contentObj[item.section] = { ...contentObj[item.section], ...item.content };
+          if (item.content && typeof item.content === 'object') {
+            contentObj[item.section as keyof WebsiteContent] = {
+              ...contentObj[item.section as keyof WebsiteContent],
+              ...item.content
+            } as any;
+          }
         });
-        setContent(contentObj as WebsiteContent);
+        setContent(contentObj);
       }
     } catch (error) {
       console.error('Error loading content:', error);
