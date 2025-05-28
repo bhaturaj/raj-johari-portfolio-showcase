@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { useWebsiteContent } from "@/hooks/useWebsiteContent";
-import { supabase } from "@/integrations/supabase/client";
 
 type FormData = {
   name: string;
@@ -27,24 +26,37 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Send email via edge function
-      const { data: result, error } = await supabase.functions.invoke('send-contact-email', {
-        body: data
-      });
+      // Create mailto link with form data
+      const emailBody = `
+Name: ${data.name}
+Email: ${data.email}
+Subject: ${data.subject}
 
-      if (error) throw error;
+Message:
+${data.message}
 
+---
+Sent from your portfolio contact form
+      `.trim();
+      
+      const mailtoLink = `mailto:johariraj70@gmail.com?subject=Contact Form: ${encodeURIComponent(data.subject)}&body=${encodeURIComponent(emailBody)}`;
+      
+      // Open email client
+      window.location.href = mailtoLink;
+      
+      // Show success message
       toast({
-        title: "Message sent successfully!",
-        description: "Thank you for your message. I'll get back to you soon.",
+        title: "Email client opened!",
+        description: "Your default email client should open with the message pre-filled. Please send the email to complete your message.",
       });
       
+      // Reset form
       reset();
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error("Error opening email client:", error);
       toast({
         title: "Error",
-        description: "There was a problem sending your message. Please try again.",
+        description: "There was a problem opening your email client. Please try again or email me directly.",
         variant: "destructive",
       });
     } finally {
@@ -70,7 +82,7 @@ const ContactSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
           <div className="h-1 w-16 bg-primary mx-auto mb-6"></div>
           <p className="text-gray-300">
-            Feel free to contact me for any work or suggestions
+            Feel free to contact me for any work or suggestions. Fill out the form below and it will open your email client with the message pre-filled.
           </p>
         </div>
 
@@ -85,7 +97,12 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Email</p>
-                  <p className="font-medium">{contactInfo.email}</p>
+                  <a 
+                    href={`mailto:${contactInfo.email}`}
+                    className="font-medium hover:text-primary transition-colors"
+                  >
+                    {contactInfo.email}
+                  </a>
                 </div>
               </div>
               
@@ -95,7 +112,12 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Phone</p>
-                  <p className="font-medium">{contactInfo.phone}</p>
+                  <a 
+                    href={`tel:${contactInfo.phone}`}
+                    className="font-medium hover:text-primary transition-colors"
+                  >
+                    {contactInfo.phone}
+                  </a>
                 </div>
               </div>
               
@@ -181,8 +203,12 @@ const ContactSection = () => {
               </div>
               
               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {isSubmitting ? "Opening Email Client..." : "Send Message"}
               </Button>
+              
+              <p className="text-xs text-gray-400 text-center mt-2">
+                This will open your default email client with the message pre-filled. Simply send the email to complete your message.
+              </p>
             </form>
           </div>
         </div>

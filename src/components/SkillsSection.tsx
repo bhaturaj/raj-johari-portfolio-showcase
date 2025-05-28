@@ -87,44 +87,46 @@ const SkillsSection = () => {
             </h3>
             
             {/* Clean Logo Carousel */}
-            <div className="relative overflow-hidden">
+            <div className="relative overflow-hidden py-8">
               <div 
-                className="flex gap-8 animate-scroll-smooth"
+                className="flex gap-16 animate-scroll-infinite"
                 style={{
                   width: 'max-content',
-                  animationDuration: '20s',
+                  animationDuration: '30s',
                   animationIterationCount: 'infinite',
                   animationTimingFunction: 'linear'
                 }}
               >
-                {/* Duplicate logos for seamless loop */}
+                {/* Triple the logos for seamless infinite loop */}
                 {[...Array(3)].map((_, duplicateIndex) => (
                   <React.Fragment key={duplicateIndex}>
                     {programmingLanguages.map((skill) => (
                       <div 
                         key={`${skill.name}-${duplicateIndex}`}
-                        className="flex-shrink-0 w-24 h-24 group cursor-pointer"
+                        className="flex-shrink-0 group cursor-pointer transition-all duration-300 hover:scale-110"
                       >
-                        <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-2xl p-4 transition-all duration-300 hover:bg-white/20 hover:scale-110 hover:shadow-2xl hover:shadow-violet-500/20 group-hover:pause-animation">
-                          {languageLogos[skill.name] ? (
-                            <img 
-                              src={languageLogos[skill.name]} 
-                              alt={skill.name}
-                              className="w-full h-full object-contain filter brightness-0 invert group-hover:filter-none transition-all duration-300"
-                              onError={(e) => {
-                                const target = e.currentTarget as HTMLImageElement;
-                                target.style.display = 'none';
-                              }}
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
-                              {skill.name.charAt(0)}
-                            </div>
-                          )}
+                        <div className="flex flex-col items-center gap-3">
+                          <div className="w-16 h-16 transition-all duration-300 group-hover:drop-shadow-2xl">
+                            {languageLogos[skill.name] ? (
+                              <img 
+                                src={languageLogos[skill.name]} 
+                                alt={skill.name}
+                                className="w-full h-full object-contain transition-all duration-300 group-hover:scale-110"
+                                onError={(e) => {
+                                  const target = e.currentTarget as HTMLImageElement;
+                                  target.style.display = 'none';
+                                }}
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold bg-white/10 rounded-lg">
+                                {skill.name.charAt(0)}
+                              </div>
+                            )}
+                          </div>
+                          <p className="text-white text-sm font-medium transition-all duration-300 group-hover:text-violet-300">
+                            {skill.name}
+                          </p>
                         </div>
-                        <p className="text-center text-white text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          {skill.name}
-                        </p>
                       </div>
                     ))}
                   </React.Fragment>
@@ -196,7 +198,7 @@ const SkillsSection = () => {
       </div>
 
       <style>{`
-        @keyframes scroll-smooth {
+        @keyframes scroll-infinite {
           0% {
             transform: translateX(0);
           }
@@ -205,16 +207,12 @@ const SkillsSection = () => {
           }
         }
         
-        .animate-scroll-smooth {
-          animation: scroll-smooth 20s linear infinite;
+        .animate-scroll-infinite {
+          animation: scroll-infinite 30s linear infinite;
         }
         
-        .group:hover .animate-scroll-smooth {
+        .animate-scroll-infinite:hover {
           animation-play-state: paused;
-        }
-        
-        .pause-animation {
-          animation-play-state: paused !important;
         }
       `}</style>
     </section>
