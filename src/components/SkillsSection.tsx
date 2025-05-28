@@ -7,7 +7,6 @@ const SkillsSection = () => {
   if (loading) {
     return (
       <section id="skills" className="section-padding relative min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-blue-900 overflow-hidden">
-        {/* Background Elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-40 right-32 w-72 h-72 rounded-full bg-blue-300 opacity-10 blur-3xl animate-pulse"></div>
           <div className="absolute bottom-32 left-32 w-80 h-80 rounded-full bg-indigo-300 opacity-10 blur-3xl animate-pulse" style={{animationDelay: "1s"}}></div>
@@ -29,19 +28,16 @@ const SkillsSection = () => {
   }
 
   const skills = content.skills.skills;
-  const categories = Array.from(new Set(skills.map((skill) => skill.category)));
   
-  // Custom colors for different categories
-  const categoryColors = {
-    "Languages": "from-violet-500 to-indigo-500",
-    "Core": "from-blue-500 to-cyan-500",
-    "Database": "from-pink-500 to-rose-500",
-    "Technologies": "from-amber-500 to-orange-500",
-    "Web": "from-emerald-500 to-green-500",
-    "Framework": "from-purple-500 to-fuchsia-500"
-  };
-
-  // Real programming language logos and symbols
+  // Separate programming languages from other skills
+  const programmingLanguages = skills.filter(skill => 
+    skill.category === "Languages" || 
+    ["JavaScript", "TypeScript", "Python", "Java", "C", "C++", "HTML", "CSS"].includes(skill.name)
+  );
+  
+  const otherSkills = skills.filter(skill => !programmingLanguages.includes(skill));
+  
+  // Programming language logos
   const languageLogos = {
     "C": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg",
     "C++": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
@@ -51,6 +47,9 @@ const SkillsSection = () => {
     "TypeScript": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
     "HTML": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
     "CSS": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+  };
+
+  const otherLogos = {
     "React": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
     "Node.js": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
     "MongoDB": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
@@ -69,13 +68,6 @@ const SkillsSection = () => {
       <div className="absolute inset-0 z-0">
         <div className="absolute top-40 right-32 w-72 h-72 rounded-full bg-blue-300 opacity-10 blur-3xl animate-pulse"></div>
         <div className="absolute bottom-32 left-32 w-80 h-80 rounded-full bg-indigo-300 opacity-10 blur-3xl animate-pulse" style={{animationDelay: "1s"}}></div>
-        <div className="absolute top-1/3 left-1/4 w-40 h-40 rounded-full bg-purple-400 opacity-5 blur-2xl animate-float"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-56 h-56 rounded-full bg-violet-300 opacity-5 blur-2xl animate-float" style={{animationDelay: "1.5s"}}></div>
-        
-        {/* Floating code symbols */}
-        <div className="absolute top-20 left-20 text-blue-300 opacity-10 text-2xl animate-pulse">{"</>"}</div>
-        <div className="absolute bottom-20 right-20 text-indigo-300 opacity-10 text-xl animate-pulse" style={{animationDelay: "0.5s"}}>{"{ }"}</div>
-        <div className="absolute top-1/2 left-10 text-purple-300 opacity-10 text-lg animate-pulse" style={{animationDelay: "1s"}}>{"[ ]"}</div>
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
@@ -88,133 +80,141 @@ const SkillsSection = () => {
         </div>
 
         <div className="max-w-6xl mx-auto">
-          {categories.map((category, categoryIndex) => (
-            <div key={category} className="mb-16 overflow-hidden">
-              <h3 className="text-2xl font-bold mb-8 text-white text-center flex items-center justify-center gap-3">
-                <div className={`w-2 h-8 bg-gradient-to-b ${categoryColors[category] || "from-violet-500 to-indigo-500"} rounded-full`}></div>
-                {category}
-                <div className={`w-2 h-8 bg-gradient-to-b ${categoryColors[category] || "from-violet-500 to-indigo-500"} rounded-full`}></div>
+          {/* Programming Languages Carousel */}
+          <div className="mb-20">
+            <h3 className="text-2xl font-bold mb-12 text-white text-center">
+              Programming Languages
+            </h3>
+            
+            {/* Clean Logo Carousel */}
+            <div className="relative overflow-hidden">
+              <div 
+                className="flex gap-8 animate-scroll-smooth"
+                style={{
+                  width: 'max-content',
+                  animationDuration: '20s',
+                  animationIterationCount: 'infinite',
+                  animationTimingFunction: 'linear'
+                }}
+              >
+                {/* Duplicate logos for seamless loop */}
+                {[...Array(3)].map((_, duplicateIndex) => (
+                  <React.Fragment key={duplicateIndex}>
+                    {programmingLanguages.map((skill) => (
+                      <div 
+                        key={`${skill.name}-${duplicateIndex}`}
+                        className="flex-shrink-0 w-24 h-24 group cursor-pointer"
+                      >
+                        <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-2xl p-4 transition-all duration-300 hover:bg-white/20 hover:scale-110 hover:shadow-2xl hover:shadow-violet-500/20 group-hover:pause-animation">
+                          {languageLogos[skill.name] ? (
+                            <img 
+                              src={languageLogos[skill.name]} 
+                              alt={skill.name}
+                              className="w-full h-full object-contain filter brightness-0 invert group-hover:filter-none transition-all duration-300"
+                              onError={(e) => {
+                                const target = e.currentTarget as HTMLImageElement;
+                                target.style.display = 'none';
+                              }}
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
+                              {skill.name.charAt(0)}
+                            </div>
+                          )}
+                        </div>
+                        <p className="text-center text-white text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          {skill.name}
+                        </p>
+                      </div>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </div>
+              
+              {/* Gradient fade effects */}
+              <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-slate-900 to-transparent pointer-events-none z-10"></div>
+              <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10"></div>
+            </div>
+          </div>
+
+          {/* Other Skills Grid */}
+          {otherSkills.length > 0 && (
+            <div>
+              <h3 className="text-2xl font-bold mb-12 text-white text-center">
+                Technologies & Tools
               </h3>
               
-              {/* Enhanced scrolling container with blur on both sides */}
-              <div className="relative">
-                <div 
-                  className={`flex gap-6 ${
-                    categoryIndex % 2 === 0 ? 'animate-scroll-left' : 'animate-scroll-right'
-                  }`}
-                  style={{
-                    width: 'max-content',
-                    animationDuration: '25s',
-                    animationIterationCount: 'infinite',
-                    animationTimingFunction: 'linear'
-                  }}
-                >
-                  {/* Duplicate the skills for continuous scrolling */}
-                  {[...Array(4)].map((_, duplicateIndex) => (
-                    <React.Fragment key={duplicateIndex}>
-                      {skills
-                        .filter((skill) => skill.category === category)
-                        .map((skill, skillIndex) => (
-                          <div 
-                            key={`${skill.name}-${duplicateIndex}`}
-                            className="skill-card flex-shrink-0 w-72 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl group"
-                          >
-                            <div className="flex flex-col items-center w-full">
-                              <div className="flex items-center gap-3 mb-4">
-                                {languageLogos[skill.name] ? (
-                                  <img 
-                                    src={languageLogos[skill.name]} 
-                                    alt={skill.name}
-                                    className="w-8 h-8 group-hover:scale-110 transition-transform duration-300"
-                                    onError={(e) => {
-                                      const target = e.currentTarget as HTMLImageElement;
-                                      target.style.display = 'none';
-                                      const nextElement = target.nextElementSibling as HTMLElement;
-                                      if (nextElement) {
-                                        nextElement.style.display = 'block';
-                                      }
-                                    }}
-                                  />
-                                ) : null}
-                                <span className="text-2xl group-hover:scale-110 transition-transform duration-300" style={{display: languageLogos[skill.name] ? 'none' : 'block'}}>
-                                  {skill.icon || "💻"}
-                                </span>
-                                <span className="text-white font-semibold text-lg group-hover:text-blue-300 transition-colors">
-                                  {skill.name}
-                                </span>
-                              </div>
-                              
-                              <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden mb-3">
-                                <div
-                                  className={`bg-gradient-to-r ${categoryColors[category] || "from-violet-500 to-indigo-500"} h-3 rounded-full relative transition-all duration-1000 group-hover:scale-105`}
-                                  style={{ width: `${skill.level}%` }}
-                                >
-                                  <div className="absolute top-0 left-0 w-full h-full bg-white/20 animate-pulse"></div>
-                                </div>
-                              </div>
-                              
-                              <div className="flex justify-between items-center w-full">
-                                <span className="text-sm text-gray-300 font-medium">Proficiency</span>
-                                <span className="text-lg text-white font-bold group-hover:text-blue-300 transition-colors">{skill.level}%</span>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </React.Fragment>
-                  ))}
-                </div>
-                
-                {/* Enhanced gradient fade effects on both sides */}
-                <div className="absolute left-0 top-0 w-40 h-full bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent pointer-events-none z-10"></div>
-                <div className="absolute right-0 top-0 w-40 h-full bg-gradient-to-l from-slate-900 via-slate-900/90 to-transparent pointer-events-none z-10"></div>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                {otherSkills.map((skill) => (
+                  <div 
+                    key={skill.name}
+                    className="group cursor-pointer"
+                  >
+                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 transition-all duration-300 hover:bg-white/15 hover:scale-105 hover:shadow-lg">
+                      <div className="flex flex-col items-center">
+                        <div className="w-12 h-12 mb-3">
+                          {otherLogos[skill.name] ? (
+                            <img 
+                              src={otherLogos[skill.name]} 
+                              alt={skill.name}
+                              className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                              onError={(e) => {
+                                const target = e.currentTarget as HTMLImageElement;
+                                target.style.display = 'none';
+                                const nextElement = target.nextElementSibling as HTMLElement;
+                                if (nextElement) {
+                                  nextElement.style.display = 'block';
+                                }
+                              }}
+                            />
+                          ) : null}
+                          <span className="text-2xl group-hover:scale-110 transition-transform duration-300" style={{display: otherLogos[skill.name] ? 'none' : 'block'}}>
+                            {skill.icon || "⚡"}
+                          </span>
+                        </div>
+                        
+                        <span className="text-white font-medium text-sm text-center group-hover:text-violet-300 transition-colors">
+                          {skill.name}
+                        </span>
+                        
+                        <div className="w-full bg-white/10 rounded-full h-1 mt-2">
+                          <div
+                            className="bg-gradient-to-r from-violet-500 to-indigo-500 h-1 rounded-full transition-all duration-300 group-hover:scale-105"
+                            style={{ width: `${skill.level}%` }}
+                          />
+                        </div>
+                        
+                        <span className="text-xs text-gray-400 mt-1">{skill.level}%</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          )}
         </div>
       </div>
 
       <style>{`
-        @keyframes scroll-left {
+        @keyframes scroll-smooth {
           0% {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-25%);
+            transform: translateX(-33.333%);
           }
         }
         
-        @keyframes scroll-right {
-          0% {
-            transform: translateX(-25%);
-          }
-          100% {
-            transform: translateX(0);
-          }
+        .animate-scroll-smooth {
+          animation: scroll-smooth 20s linear infinite;
         }
         
-        .animate-scroll-left {
-          animation: scroll-left 25s linear infinite;
+        .group:hover .animate-scroll-smooth {
+          animation-play-state: paused;
         }
         
-        .animate-scroll-right {
-          animation: scroll-right 25s linear infinite;
-        }
-        
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .skill-card:hover .animate-pulse {
-          animation-duration: 0.5s;
+        .pause-animation {
+          animation-play-state: paused !important;
         }
       `}</style>
     </section>
