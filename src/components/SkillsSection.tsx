@@ -24,58 +24,23 @@ const SkillsSection = () => {
     );
   }
 
-  if (!content?.skills?.skills) {
-    return null;
-  }
-
-  const skills = content.skills.skills;
-  
-  // Separate programming languages from other skills
-  const programmingLanguages = skills.filter(skill => 
-    skill.category === "Languages" || 
-    ["JavaScript", "TypeScript", "Python", "Java", "C", "C++", "HTML", "CSS", "PHP", "Go", "Rust"].includes(skill.name)
-  );
-  
-  const otherSkills = skills.filter(skill => !programmingLanguages.includes(skill));
-  
-  // Enhanced programming language logos
-  const languageLogos = {
-    "C": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg",
-    "C++": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
-    "Java": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
-    "Python": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
-    "JavaScript": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
-    "TypeScript": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
-    "HTML": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
-    "CSS": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
-    "PHP": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
-    "Go": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg",
-    "Rust": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg",
-  };
-
-  // Enhanced technology logos with proper URLs
-  const techLogos = {
-    "React": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-    "Node.js": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
-    "MongoDB": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg",
-    "Express": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg",
-    "Angular": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-original.svg",
-    "Vue": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg",
-    "Git": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
-    "Docker": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
-    "AWS": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original.svg",
-    ".NET": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-original.svg",
-    "SQL": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
-    "PostgreSQL": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
-    "Firebase": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg",
-    "Redis": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg",
-    "Kubernetes": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg",
-    "Next.js": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
-    "Tailwind CSS": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
-    "Bootstrap": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg",
-    "GraphQL": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg",
-    "Webpack": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/webpack/webpack-original.svg"
-  };
+  // Professional skills array with proper logos
+  const professionalSkills = [
+    { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
+    { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+    { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
+    { name: "Express.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" },
+    { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
+    { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
+    { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+    { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" },
+    { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" },
+    { name: "HTML5", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
+    { name: "CSS3", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
+    { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
+    { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
+    { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" }
+  ];
 
   return (
     <section id="skills" className="section-padding relative min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-blue-900 overflow-hidden">
@@ -87,130 +52,88 @@ const SkillsSection = () => {
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+        <div className="max-w-4xl mx-auto text-center mb-20">
+          <h2 className="text-5xl md:text-6xl font-bold mb-8 text-white">
             My <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">Skills</span>
           </h2>
-          <div className="h-1.5 w-24 bg-gradient-to-r from-violet-500 to-indigo-500 mx-auto mb-8 rounded-full"></div>
-          <p className="text-gray-300 text-lg leading-relaxed">
-            Technologies and programming languages I've mastered through continuous learning and hands-on experience
+          <div className="h-2 w-32 bg-gradient-to-r from-violet-500 to-indigo-500 mx-auto mb-10 rounded-full"></div>
+          <p className="text-gray-300 text-xl leading-relaxed max-w-3xl mx-auto">
+            Mastering cutting-edge technologies to build innovative and scalable solutions
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto space-y-20">
-          {/* Programming Languages Carousel - No Boxes */}
-          <div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-white text-center">
-              Programming Languages
-            </h3>
-            
-            <div className="relative overflow-hidden py-8">
-              <div 
-                className="flex gap-16 animate-scroll-infinite"
-                style={{
-                  width: 'max-content',
-                  animationDuration: '25s',
-                  animationIterationCount: 'infinite',
-                  animationTimingFunction: 'linear'
-                }}
-              >
-                {[...Array(3)].map((_, duplicateIndex) => (
-                  <React.Fragment key={duplicateIndex}>
-                    {programmingLanguages.map((skill) => (
-                      <div 
-                        key={`${skill.name}-${duplicateIndex}`}
-                        className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-125"
-                      >
-                        <div className="flex flex-col items-center gap-4 transition-all duration-500">
-                          <div className="w-20 h-20 md:w-24 md:h-24 transition-all duration-500 group-hover:drop-shadow-2xl group-hover:scale-110">
-                            {languageLogos[skill.name] ? (
+        <div className="max-w-7xl mx-auto">
+          {/* Professional Skills Carousel */}
+          <div className="relative overflow-hidden py-16">
+            <div 
+              className="flex gap-20 animate-scroll-infinite"
+              style={{
+                width: 'max-content',
+                animationDuration: '40s',
+                animationIterationCount: 'infinite',
+                animationTimingFunction: 'linear'
+              }}
+            >
+              {[...Array(3)].map((_, duplicateIndex) => (
+                <React.Fragment key={duplicateIndex}>
+                  {professionalSkills.map((skill, index) => (
+                    <div 
+                      key={`${skill.name}-${duplicateIndex}`}
+                      className="flex-shrink-0 group cursor-pointer transition-all duration-700 hover:scale-110"
+                    >
+                      <div className="flex flex-col items-center gap-6 transition-all duration-700">
+                        <div className="relative">
+                          <div className="w-28 h-28 md:w-32 md:h-32 transition-all duration-700 group-hover:scale-125 group-hover:rotate-12">
+                            <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-700"></div>
+                            <div className="relative w-full h-full bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 flex items-center justify-center group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-700">
                               <img 
-                                src={languageLogos[skill.name]} 
+                                src={skill.logo} 
                                 alt={skill.name}
-                                className="w-full h-full object-contain transition-all duration-500 filter group-hover:brightness-110 group-hover:drop-shadow-lg"
+                                className="w-16 h-16 md:w-20 md:h-20 object-contain transition-all duration-700 filter group-hover:brightness-110 group-hover:drop-shadow-2xl"
                                 onError={(e) => {
                                   const target = e.currentTarget as HTMLImageElement;
                                   target.style.display = 'none';
                                 }}
                               />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold bg-gradient-to-br from-violet-500 to-indigo-500 rounded-xl">
-                                {skill.name.charAt(0)}
-                              </div>
-                            )}
+                            </div>
                           </div>
-                          <p className="text-white text-sm font-semibold transition-all duration-500 group-hover:text-violet-300 group-hover:scale-110">
+                        </div>
+                        <div className="text-center">
+                          <p className="text-white text-lg font-bold transition-all duration-700 group-hover:text-violet-300 group-hover:scale-110">
                             {skill.name}
                           </p>
+                          <div className="w-0 h-0.5 bg-gradient-to-r from-violet-400 to-indigo-400 mx-auto mt-2 group-hover:w-full transition-all duration-700"></div>
                         </div>
                       </div>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </div>
-              
-              <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-slate-900 to-transparent pointer-events-none z-10"></div>
-              <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10"></div>
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
             </div>
+            
+            {/* Gradient overlays */}
+            <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-slate-900 to-transparent pointer-events-none z-10"></div>
+            <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10"></div>
           </div>
 
-          {/* Technologies & Tools Carousel - No Boxes */}
-          {otherSkills.length > 0 && (
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-12 text-white text-center">
-                Technologies & Tools
-              </h3>
-              
-              <div className="relative overflow-hidden py-8">
-                <div 
-                  className="flex gap-16 animate-scroll-infinite-reverse"
-                  style={{
-                    width: 'max-content',
-                    animationDuration: '30s',
-                    animationIterationCount: 'infinite',
-                    animationTimingFunction: 'linear'
-                  }}
-                >
-                  {[...Array(3)].map((_, duplicateIndex) => (
-                    <React.Fragment key={duplicateIndex}>
-                      {otherSkills.map((skill) => (
-                        <div 
-                          key={`${skill.name}-${duplicateIndex}`}
-                          className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-125"
-                        >
-                          <div className="flex flex-col items-center gap-4 transition-all duration-500">
-                            <div className="w-20 h-20 md:w-24 md:h-24 transition-all duration-500 group-hover:drop-shadow-2xl group-hover:scale-110">
-                              {techLogos[skill.name] ? (
-                                <img 
-                                  src={techLogos[skill.name]} 
-                                  alt={skill.name}
-                                  className="w-full h-full object-contain transition-all duration-500 filter group-hover:brightness-110 group-hover:drop-shadow-lg"
-                                  onError={(e) => {
-                                    const target = e.currentTarget as HTMLImageElement;
-                                    target.style.display = 'none';
-                                  }}
-                                />
-                              ) : (
-                                <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl">
-                                  {skill.icon || skill.name.charAt(0)}
-                                </div>
-                              )}
-                            </div>
-                            <p className="text-white text-sm font-semibold transition-all duration-500 group-hover:text-indigo-300 group-hover:scale-110">
-                              {skill.name}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </React.Fragment>
-                  ))}
+          {/* Professional Statistics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20">
+            {[
+              { number: "14+", label: "Technologies" },
+              { number: "100+", label: "Hours Coding" },
+              { number: "Multiple", label: "Projects" },
+              { number: "Always", label: "Learning" }
+            ].map((stat, index) => (
+              <div key={index} className="text-center group">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:text-violet-400 transition-colors duration-300">
+                  {stat.number}
                 </div>
-                
-                <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-slate-900 to-transparent pointer-events-none z-10"></div>
-                <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10"></div>
+                <div className="text-gray-400 text-lg font-medium">
+                  {stat.label}
+                </div>
               </div>
-            </div>
-          )}
+            ))}
+          </div>
         </div>
       </div>
 
@@ -224,25 +147,11 @@ const SkillsSection = () => {
           }
         }
         
-        @keyframes scroll-infinite-reverse {
-          0% {
-            transform: translateX(-33.333%);
-          }
-          100% {
-            transform: translateX(0);
-          }
-        }
-        
         .animate-scroll-infinite {
-          animation: scroll-infinite 25s linear infinite;
+          animation: scroll-infinite 40s linear infinite;
         }
         
-        .animate-scroll-infinite-reverse {
-          animation: scroll-infinite-reverse 30s linear infinite;
-        }
-        
-        .animate-scroll-infinite:hover,
-        .animate-scroll-infinite-reverse:hover {
+        .animate-scroll-infinite:hover {
           animation-play-state: paused;
         }
       `}</style>
