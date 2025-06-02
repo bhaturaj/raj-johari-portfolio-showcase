@@ -26,28 +26,40 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Create mailto link with form data
+      // Create an exciting email body with professional formatting
       const emailBody = `
-Name: ${data.name}
-Email: ${data.email}
-Subject: ${data.subject}
+🚀 NEW MESSAGE FROM YOUR PORTFOLIO WEBSITE! 🚀
 
-Message:
+===============================================
+CONTACT DETAILS:
+===============================================
+👤 Name: ${data.name}
+📧 Email: ${data.email}
+📋 Subject: ${data.subject}
+
+===============================================
+MESSAGE:
+===============================================
 ${data.message}
 
----
-Sent from your portfolio contact form
+===============================================
+💡 This message was sent through your professional portfolio website.
+⭐ Another potential opportunity awaits!
+🎯 Time to showcase your amazing skills!
+
+Best regards,
+Your Portfolio Contact System 🚀
       `.trim();
       
-      const mailtoLink = `mailto:johariraj70@gmail.com?subject=Contact Form: ${encodeURIComponent(data.subject)}&body=${encodeURIComponent(emailBody)}`;
+      const mailtoLink = `mailto:johariraj70@gmail.com?subject=🔥 Portfolio Contact: ${encodeURIComponent(data.subject)}&body=${encodeURIComponent(emailBody)}`;
       
       // Open email client
       window.location.href = mailtoLink;
       
-      // Show success message
+      // Show exciting success message
       toast({
-        title: "Email client opened!",
-        description: "Your default email client should open with the message pre-filled. Please send the email to complete your message.",
+        title: "🎉 Message Ready to Send!",
+        description: "Your email client is opening with an exciting message format. Just hit send to complete!",
       });
       
       // Reset form
@@ -55,8 +67,8 @@ Sent from your portfolio contact form
     } catch (error) {
       console.error("Error opening email client:", error);
       toast({
-        title: "Error",
-        description: "There was a problem opening your email client. Please try again or email me directly.",
+        title: "❌ Oops! Something went wrong",
+        description: "Please try again or contact me directly at johariraj70@gmail.com",
         variant: "destructive",
       });
     } finally {
@@ -82,7 +94,7 @@ Sent from your portfolio contact form
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
           <div className="h-1 w-16 bg-primary mx-auto mb-6"></div>
           <p className="text-gray-300">
-            Feel free to contact me for any work or suggestions. Fill out the form below and it will open your email client with the message pre-filled.
+            Ready to bring your ideas to life? Let's connect and create something amazing together! 🚀
           </p>
         </div>
 
@@ -203,11 +215,11 @@ Sent from your portfolio contact form
               </div>
               
               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Opening Email Client..." : "Send Message"}
+                {isSubmitting ? "🚀 Preparing Your Message..." : "✨ Send Message"}
               </Button>
               
               <p className="text-xs text-gray-400 text-center mt-2">
-                This will open your default email client with the message pre-filled. Simply send the email to complete your message.
+                🎯 Your message will open in your email client with an exciting professional format!
               </p>
             </form>
           </div>

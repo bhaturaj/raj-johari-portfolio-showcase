@@ -1,37 +1,73 @@
-
 import React from "react";
 import { Download, FileText, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useWebsiteContent } from "@/hooks/useWebsiteContent";
+import { useToast } from "@/hooks/use-toast";
 
 const ResumeSection = () => {
   const { content, loading } = useWebsiteContent();
+  const { toast } = useToast();
 
   const handleDownload = () => {
     const resumeLink = content?.resume?.downloadLink;
     if (resumeLink) {
-      // Create a link element and trigger download
-      const link = document.createElement('a');
-      link.href = resumeLink;
-      link.download = 'Bhaturaj_Johari_Resume.pdf';
-      link.target = '_blank';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      try {
+        // Create a link element and trigger download
+        const link = document.createElement('a');
+        link.href = resumeLink;
+        link.download = 'Bhaturaj_Johari_Resume.pdf';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        toast({
+          title: "Download Started!",
+          description: "Your resume download has started successfully.",
+        });
+      } catch (error) {
+        console.error('Download error:', error);
+        toast({
+          title: "Download Error",
+          description: "Unable to download resume. Please try again.",
+          variant: "destructive",
+        });
+      }
     } else {
       // Fallback: open email if no resume link
-      window.location.href = 'mailto:johariraj70@gmail.com?subject=Resume Request&body=Hi, I would like to request your resume.';
+      window.location.href = 'mailto:johariraj70@gmail.com?subject=Resume Request&body=Hi Bhaturaj, I would like to request your resume. Thank you!';
     }
   };
 
   const handleViewOnline = () => {
     const resumeLink = content?.resume?.downloadLink;
     if (resumeLink) {
-      // Open PDF in new tab for viewing
-      window.open(resumeLink, '_blank');
+      try {
+        // For better PDF viewing, we'll use Google Docs viewer as fallback
+        const googleDocsViewer = `https://docs.google.com/viewer?url=${encodeURIComponent(resumeLink)}&embedded=true`;
+        
+        // Try opening the PDF directly first
+        const newWindow = window.open(resumeLink, '_blank', 'noopener,noreferrer');
+        
+        // If direct opening fails, use Google Docs viewer
+        if (!newWindow) {
+          window.open(googleDocsViewer, '_blank', 'noopener,noreferrer');
+        }
+        
+        toast({
+          title: "Opening Resume",
+          description: "Resume is opening in a new tab for viewing.",
+        });
+      } catch (error) {
+        console.error('View error:', error);
+        // Fallback to Google Docs viewer
+        const googleDocsViewer = `https://docs.google.com/viewer?url=${encodeURIComponent(resumeLink)}&embedded=true`;
+        window.open(googleDocsViewer, '_blank', 'noopener,noreferrer');
+      }
     } else {
       // Fallback: open email if no resume link
-      window.location.href = 'mailto:johariraj70@gmail.com?subject=Resume Request&body=Hi, I would like to view your resume online.';
+      window.location.href = 'mailto:johariraj70@gmail.com?subject=Resume View Request&body=Hi Bhaturaj, I would like to view your resume online. Thank you!';
     }
   };
 
