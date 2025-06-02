@@ -77,7 +77,7 @@ const getDefaultContent = (): WebsiteContent => ({
     education: "B.Tech Computer Science",
     passion: "Technology & Innovation",
     careerGoals: "Software Engineer",
-    profileImage: "/lovable-uploads/e1d62208-1d51-40fa-85df-f10f02304d02.png"
+    profileImage: "/lovable-uploads/b4c1a83b-ed2e-4d1d-9b7d-398da2f0f393.png"
   },
   education: {
     educationData: [
@@ -174,6 +174,7 @@ export const useWebsiteContent = () => {
           }
         });
         setContent(contentObj);
+        console.log('Content loaded successfully:', contentObj);
       }
     } catch (error) {
       console.error('Error loading content:', error);
@@ -189,6 +190,8 @@ export const useWebsiteContent = () => {
 
   const updateContent = async (section: string, newContent: any) => {
     try {
+      console.log('Updating content for section:', section, newContent);
+      
       const { error } = await supabase
         .from('website_content')
         .upsert({
@@ -202,10 +205,17 @@ export const useWebsiteContent = () => {
       if (error) throw error;
 
       // Update local state immediately
-      setContent(prev => ({
-        ...prev,
-        [section]: newContent
-      }));
+      setContent(prev => {
+        const updated = {
+          ...prev,
+          [section]: newContent
+        };
+        console.log('Local content updated:', updated);
+        return updated;
+      });
+
+      // Force a page refresh to ensure all components get the updated data
+      window.location.reload();
 
       toast({
         title: "Success",

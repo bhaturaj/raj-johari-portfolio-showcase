@@ -98,7 +98,7 @@ const SkillsSection = () => {
         </div>
 
         <div className="max-w-7xl mx-auto space-y-20">
-          {/* Programming Languages Carousel */}
+          {/* Programming Languages Carousel - No Boxes */}
           <div>
             <h3 className="text-2xl md:text-3xl font-bold mb-12 text-white text-center">
               Programming Languages
@@ -119,15 +119,15 @@ const SkillsSection = () => {
                     {programmingLanguages.map((skill) => (
                       <div 
                         key={`${skill.name}-${duplicateIndex}`}
-                        className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-110"
+                        className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-125"
                       >
-                        <div className="flex flex-col items-center gap-4 p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-2xl hover:shadow-violet-500/20 transition-all duration-500">
-                          <div className="w-16 h-16 md:w-20 md:h-20 transition-all duration-500 group-hover:drop-shadow-2xl">
+                        <div className="flex flex-col items-center gap-4 transition-all duration-500">
+                          <div className="w-20 h-20 md:w-24 md:h-24 transition-all duration-500 group-hover:drop-shadow-2xl group-hover:scale-110">
                             {languageLogos[skill.name] ? (
                               <img 
                                 src={languageLogos[skill.name]} 
                                 alt={skill.name}
-                                className="w-full h-full object-contain transition-all duration-500 group-hover:scale-110"
+                                className="w-full h-full object-contain transition-all duration-500 filter group-hover:brightness-110 group-hover:drop-shadow-lg"
                                 onError={(e) => {
                                   const target = e.currentTarget as HTMLImageElement;
                                   target.style.display = 'none';
@@ -139,7 +139,7 @@ const SkillsSection = () => {
                               </div>
                             )}
                           </div>
-                          <p className="text-white text-sm font-semibold transition-all duration-500 group-hover:text-violet-300">
+                          <p className="text-white text-sm font-semibold transition-all duration-500 group-hover:text-violet-300 group-hover:scale-110">
                             {skill.name}
                           </p>
                         </div>
@@ -154,7 +154,7 @@ const SkillsSection = () => {
             </div>
           </div>
 
-          {/* Technologies & Tools Carousel */}
+          {/* Technologies & Tools Carousel - No Boxes */}
           {otherSkills.length > 0 && (
             <div>
               <h3 className="text-2xl md:text-3xl font-bold mb-12 text-white text-center">
@@ -176,15 +176,15 @@ const SkillsSection = () => {
                       {otherSkills.map((skill) => (
                         <div 
                           key={`${skill.name}-${duplicateIndex}`}
-                          className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-110"
+                          className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-125"
                         >
-                          <div className="flex flex-col items-center gap-4 p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-2xl hover:shadow-indigo-500/20 transition-all duration-500">
-                            <div className="w-16 h-16 md:w-20 md:h-20 transition-all duration-500 group-hover:drop-shadow-2xl">
+                          <div className="flex flex-col items-center gap-4 transition-all duration-500">
+                            <div className="w-20 h-20 md:w-24 md:h-24 transition-all duration-500 group-hover:drop-shadow-2xl group-hover:scale-110">
                               {techLogos[skill.name] ? (
                                 <img 
                                   src={techLogos[skill.name]} 
                                   alt={skill.name}
-                                  className="w-full h-full object-contain transition-all duration-500 group-hover:scale-110"
+                                  className="w-full h-full object-contain transition-all duration-500 filter group-hover:brightness-110 group-hover:drop-shadow-lg"
                                   onError={(e) => {
                                     const target = e.currentTarget as HTMLImageElement;
                                     target.style.display = 'none';
@@ -196,7 +196,7 @@ const SkillsSection = () => {
                                 </div>
                               )}
                             </div>
-                            <p className="text-white text-sm font-semibold transition-all duration-500 group-hover:text-indigo-300">
+                            <p className="text-white text-sm font-semibold transition-all duration-500 group-hover:text-indigo-300 group-hover:scale-110">
                               {skill.name}
                             </p>
                           </div>

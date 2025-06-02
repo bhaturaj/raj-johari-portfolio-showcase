@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Download, FileText, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,27 +8,29 @@ const ResumeSection = () => {
   const { content, loading } = useWebsiteContent();
 
   const handleDownload = () => {
-    // Create a downloadable PDF link
-    const link = document.createElement('a');
-    link.href = 'data:application/pdf;base64,'; // You'll need to add your actual PDF base64 data here
-    link.download = 'Bhaturaj_Johari_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Fallback: open email if PDF is not available
-    if (!link.href.includes('base64,')) {
+    const resumeLink = content?.resume?.downloadLink;
+    if (resumeLink) {
+      // Create a link element and trigger download
+      const link = document.createElement('a');
+      link.href = resumeLink;
+      link.download = 'Bhaturaj_Johari_Resume.pdf';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      // Fallback: open email if no resume link
       window.location.href = 'mailto:johariraj70@gmail.com?subject=Resume Request&body=Hi, I would like to request your resume.';
     }
   };
 
   const handleViewOnline = () => {
-    // Open PDF in new tab - you'll need to replace this with your actual PDF URL
-    const pdfUrl = 'https://your-resume-url.com/resume.pdf'; // Replace with actual PDF URL
-    window.open(pdfUrl, '_blank');
-    
-    // Fallback: open email if PDF URL is not available
-    if (pdfUrl.includes('your-resume-url.com')) {
+    const resumeLink = content?.resume?.downloadLink;
+    if (resumeLink) {
+      // Open PDF in new tab for viewing
+      window.open(resumeLink, '_blank');
+    } else {
+      // Fallback: open email if no resume link
       window.location.href = 'mailto:johariraj70@gmail.com?subject=Resume Request&body=Hi, I would like to view your resume online.';
     }
   };
