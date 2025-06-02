@@ -9,7 +9,7 @@ const ProjectsSection = () => {
       title: "City Explorer App",
       description: "An interactive application that helps users navigate and discover points of interest in different cities.",
       technologies: ["React", "Node.js", "MongoDB", "Google Maps API"],
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=500&h=300&fit=crop&auto=format",
       link: "#",
       color: "from-blue-600 to-cyan-500"
     },
@@ -17,7 +17,7 @@ const ProjectsSection = () => {
       title: "AI-based Question Generator",
       description: "A smart system that generates relevant questions based on educational content for teachers and students.",
       technologies: ["Python", "TensorFlow", "Flask", "NLP"],
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500&h=300&fit=crop&auto=format",
       link: "#",
       color: "from-violet-600 to-purple-500"
     },
@@ -25,7 +25,7 @@ const ProjectsSection = () => {
       title: "Database Management System",
       description: "A custom DBMS for efficient data storage and retrieval with advanced querying capabilities.",
       technologies: ["SQL", "Java", "Spring Boot", "Redis"],
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&h=300&fit=crop&auto=format",
       link: "#",
       color: "from-emerald-600 to-green-500"
     },
@@ -33,7 +33,7 @@ const ProjectsSection = () => {
       title: "E-learning Platform",
       description: "A comprehensive platform for online education with interactive lessons and progress tracking.",
       technologies: ["MEAN Stack", ".NET", "Azure"],
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&h=300&fit=crop&auto=format",
       link: "#",
       color: "from-pink-600 to-rose-500"
     },
@@ -65,14 +65,14 @@ const ProjectsSection = () => {
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <div key={index} className="group bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20">
+            <div key={index} className="group bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-105">
               <div className="relative h-48 overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-80`}></div>
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 mix-blend-overlay"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
+                <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-60 group-hover:opacity-40 transition-opacity duration-300`}></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div className="p-6">
@@ -93,7 +93,7 @@ const ProjectsSection = () => {
                 <Button 
                   variant="outline" 
                   asChild 
-                  className="group relative overflow-hidden bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/40"
+                  className="group relative overflow-hidden bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/40 hover:scale-105 transition-all duration-300"
                 >
                   <a href={project.link} className="flex items-center gap-2 z-10 relative">
                     View Project

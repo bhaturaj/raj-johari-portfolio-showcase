@@ -98,7 +98,7 @@ const HeroSection = () => {
           <div className="h-1.5 w-32 bg-gradient-to-r from-violet-400 via-pink-500 to-indigo-500 mx-auto my-8 reveal-animation rounded-full shadow-glow" style={{"--reveal-delay": "3"} as React.CSSProperties}></div>
           
           <h2 className="text-xl md:text-2xl font-medium text-purple-100 mb-8 reveal-animation" style={{"--reveal-delay": "4"} as React.CSSProperties}>
-            Developer & Tech Enthusiast
+            Developer & AI Enthusiast
           </h2>
           
           {/* Coding-style Animated Tagline */}

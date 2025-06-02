@@ -38,7 +38,7 @@ const SkillsSection = () => {
   
   const otherSkills = skills.filter(skill => !programmingLanguages.includes(skill));
   
-  // Programming language logos with high-quality CDN links
+  // Enhanced programming language logos
   const languageLogos = {
     "C": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg",
     "C++": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
@@ -53,6 +53,7 @@ const SkillsSection = () => {
     "Rust": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg",
   };
 
+  // Enhanced technology logos with proper URLs
   const techLogos = {
     "React": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
     "Node.js": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
@@ -68,7 +69,12 @@ const SkillsSection = () => {
     "PostgreSQL": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
     "Firebase": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg",
     "Redis": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg",
-    "Kubernetes": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg"
+    "Kubernetes": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg",
+    "Next.js": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
+    "Tailwind CSS": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
+    "Bootstrap": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg",
+    "GraphQL": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg",
+    "Webpack": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/webpack/webpack-original.svg"
   };
 
   return (
@@ -91,32 +97,32 @@ const SkillsSection = () => {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto space-y-24">
-          {/* Programming Languages Dynamic Carousel */}
+        <div className="max-w-7xl mx-auto space-y-20">
+          {/* Programming Languages Carousel */}
           <div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-16 text-white text-center">
+            <h3 className="text-2xl md:text-3xl font-bold mb-12 text-white text-center">
               Programming Languages
             </h3>
             
-            <div className="relative overflow-hidden py-12">
+            <div className="relative overflow-hidden py-8">
               <div 
-                className="flex gap-20 animate-scroll-infinite"
+                className="flex gap-16 animate-scroll-infinite"
                 style={{
                   width: 'max-content',
-                  animationDuration: '40s',
+                  animationDuration: '25s',
                   animationIterationCount: 'infinite',
                   animationTimingFunction: 'linear'
                 }}
               >
-                {[...Array(4)].map((_, duplicateIndex) => (
+                {[...Array(3)].map((_, duplicateIndex) => (
                   <React.Fragment key={duplicateIndex}>
                     {programmingLanguages.map((skill) => (
                       <div 
                         key={`${skill.name}-${duplicateIndex}`}
-                        className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-125"
+                        className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-110"
                       >
-                        <div className="flex flex-col items-center gap-4">
-                          <div className="w-20 h-20 md:w-24 md:h-24 transition-all duration-500 group-hover:drop-shadow-2xl group-hover:filter group-hover:brightness-110">
+                        <div className="flex flex-col items-center gap-4 p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-2xl hover:shadow-violet-500/20 transition-all duration-500">
+                          <div className="w-16 h-16 md:w-20 md:h-20 transition-all duration-500 group-hover:drop-shadow-2xl">
                             {languageLogos[skill.name] ? (
                               <img 
                                 src={languageLogos[skill.name]} 
@@ -128,12 +134,12 @@ const SkillsSection = () => {
                                 }}
                               />
                             ) : (
-                              <div className="w-full h-full flex items-center justify-center text-white text-3xl font-bold bg-gradient-to-br from-violet-500 to-indigo-500 rounded-2xl">
+                              <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold bg-gradient-to-br from-violet-500 to-indigo-500 rounded-xl">
                                 {skill.name.charAt(0)}
                               </div>
                             )}
                           </div>
-                          <p className="text-white text-base font-semibold transition-all duration-500 group-hover:text-violet-300 group-hover:scale-110">
+                          <p className="text-white text-sm font-semibold transition-all duration-500 group-hover:text-violet-300">
                             {skill.name}
                           </p>
                         </div>
@@ -143,38 +149,37 @@ const SkillsSection = () => {
                 ))}
               </div>
               
-              {/* Enhanced gradient fade effects */}
-              <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-slate-900 to-transparent pointer-events-none z-10"></div>
-              <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10"></div>
+              <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-slate-900 to-transparent pointer-events-none z-10"></div>
+              <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10"></div>
             </div>
           </div>
 
-          {/* Technologies & Tools Dynamic Carousel */}
+          {/* Technologies & Tools Carousel */}
           {otherSkills.length > 0 && (
             <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-16 text-white text-center">
+              <h3 className="text-2xl md:text-3xl font-bold mb-12 text-white text-center">
                 Technologies & Tools
               </h3>
               
-              <div className="relative overflow-hidden py-12">
+              <div className="relative overflow-hidden py-8">
                 <div 
-                  className="flex gap-20 animate-scroll-infinite-reverse"
+                  className="flex gap-16 animate-scroll-infinite-reverse"
                   style={{
                     width: 'max-content',
-                    animationDuration: '50s',
+                    animationDuration: '30s',
                     animationIterationCount: 'infinite',
                     animationTimingFunction: 'linear'
                   }}
                 >
-                  {[...Array(4)].map((_, duplicateIndex) => (
+                  {[...Array(3)].map((_, duplicateIndex) => (
                     <React.Fragment key={duplicateIndex}>
                       {otherSkills.map((skill) => (
                         <div 
                           key={`${skill.name}-${duplicateIndex}`}
-                          className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-125"
+                          className="flex-shrink-0 group cursor-pointer transition-all duration-500 hover:scale-110"
                         >
-                          <div className="flex flex-col items-center gap-4">
-                            <div className="w-20 h-20 md:w-24 md:h-24 transition-all duration-500 group-hover:drop-shadow-2xl group-hover:filter group-hover:brightness-110">
+                          <div className="flex flex-col items-center gap-4 p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-2xl hover:shadow-indigo-500/20 transition-all duration-500">
+                            <div className="w-16 h-16 md:w-20 md:h-20 transition-all duration-500 group-hover:drop-shadow-2xl">
                               {techLogos[skill.name] ? (
                                 <img 
                                   src={techLogos[skill.name]} 
@@ -186,12 +191,12 @@ const SkillsSection = () => {
                                   }}
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-white text-3xl font-bold bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl">
+                                <div className="w-full h-full flex items-center justify-center text-white text-2xl font-bold bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl">
                                   {skill.icon || skill.name.charAt(0)}
                                 </div>
                               )}
                             </div>
-                            <p className="text-white text-base font-semibold transition-all duration-500 group-hover:text-indigo-300 group-hover:scale-110">
+                            <p className="text-white text-sm font-semibold transition-all duration-500 group-hover:text-indigo-300">
                               {skill.name}
                             </p>
                           </div>
@@ -201,9 +206,8 @@ const SkillsSection = () => {
                   ))}
                 </div>
                 
-                {/* Enhanced gradient fade effects */}
-                <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-slate-900 to-transparent pointer-events-none z-10"></div>
-                <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10"></div>
+                <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-slate-900 to-transparent pointer-events-none z-10"></div>
+                <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-slate-900 to-transparent pointer-events-none z-10"></div>
               </div>
             </div>
           )}
@@ -216,13 +220,13 @@ const SkillsSection = () => {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-25%);
+            transform: translateX(-33.333%);
           }
         }
         
         @keyframes scroll-infinite-reverse {
           0% {
-            transform: translateX(-25%);
+            transform: translateX(-33.333%);
           }
           100% {
             transform: translateX(0);
@@ -230,11 +234,11 @@ const SkillsSection = () => {
         }
         
         .animate-scroll-infinite {
-          animation: scroll-infinite 40s linear infinite;
+          animation: scroll-infinite 25s linear infinite;
         }
         
         .animate-scroll-infinite-reverse {
-          animation: scroll-infinite-reverse 50s linear infinite;
+          animation: scroll-infinite-reverse 30s linear infinite;
         }
         
         .animate-scroll-infinite:hover,

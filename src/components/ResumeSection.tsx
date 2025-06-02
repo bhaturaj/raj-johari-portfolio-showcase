@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Download, FileText, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,24 +7,28 @@ const ResumeSection = () => {
   const { content, loading } = useWebsiteContent();
 
   const handleDownload = () => {
-    const resumeLink = content?.resume?.downloadLink;
+    // Create a downloadable PDF link
+    const link = document.createElement('a');
+    link.href = 'data:application/pdf;base64,'; // You'll need to add your actual PDF base64 data here
+    link.download = 'Bhaturaj_Johari_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     
-    if (resumeLink) {
-      // If it's a blob URL or file URL, trigger download
-      if (resumeLink.startsWith('blob:') || resumeLink.startsWith('http')) {
-        const link = document.createElement('a');
-        link.href = resumeLink;
-        link.download = content?.resume?.title || 'Resume.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } else {
-        // If it's an external URL, open in new tab
-        window.open(resumeLink, '_blank');
-      }
-    } else {
-      // Fallback - open mailto for now
+    // Fallback: open email if PDF is not available
+    if (!link.href.includes('base64,')) {
       window.location.href = 'mailto:johariraj70@gmail.com?subject=Resume Request&body=Hi, I would like to request your resume.';
+    }
+  };
+
+  const handleViewOnline = () => {
+    // Open PDF in new tab - you'll need to replace this with your actual PDF URL
+    const pdfUrl = 'https://your-resume-url.com/resume.pdf'; // Replace with actual PDF URL
+    window.open(pdfUrl, '_blank');
+    
+    // Fallback: open email if PDF URL is not available
+    if (pdfUrl.includes('your-resume-url.com')) {
+      window.location.href = 'mailto:johariraj70@gmail.com?subject=Resume Request&body=Hi, I would like to view your resume online.';
     }
   };
 
@@ -90,7 +93,7 @@ const ResumeSection = () => {
                 <Button 
                   onClick={handleDownload}
                   size="lg" 
-                  className="group relative bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  className="group relative bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-105"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     <Download className="w-5 h-5 group-hover:animate-bounce" />
@@ -99,19 +102,15 @@ const ResumeSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </Button>
                 
-                {resumeData.downloadLink && (
-                  <Button 
-                    variant="outline" 
-                    size="lg"
-                    asChild
-                    className="group bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/40 px-8 py-3 rounded-full"
-                  >
-                    <a href={resumeData.downloadLink} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
-                      View Online
-                    </a>
-                  </Button>
-                )}
+                <Button 
+                  onClick={handleViewOnline}
+                  variant="outline" 
+                  size="lg"
+                  className="group bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/40 px-8 py-3 rounded-full hover:scale-105 transition-all duration-300"
+                >
+                  <ExternalLink className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
+                  View Online
+                </Button>
               </div>
               
               <div className="mt-8 text-sm text-gray-400">

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useWebsiteContent } from "@/hooks/useWebsiteContent";
@@ -32,7 +31,7 @@ const AboutSection = () => {
     return null;
   }
 
-  const { dateOfBirth, education, passion, careerGoals, profileImage } = content.about;
+  const { dateOfBirth, education, passion, careerGoals } = content.about;
 
   return (
     <section id="about" className="section-padding relative min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-violet-900 overflow-hidden">
@@ -59,7 +58,7 @@ const AboutSection = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-lg blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
               <div className="w-64 h-72 md:w-80 md:h-96 bg-gray-200 rounded-lg overflow-hidden interactive-border relative z-10">
                 <img 
-                  src={profileImage || "/lovable-uploads/e1d62208-1d51-40fa-85df-f10f02304d02.png"} 
+                  src="/lovable-uploads/b4c1a83b-ed2e-4d1d-9b7d-398da2f0f393.png" 
                   alt="Bhaturaj Johari" 
                   className="w-full h-full object-cover"
                 />

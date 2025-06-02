@@ -10,10 +10,10 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div>
             <p className="text-lg font-bold">
-              Bhaturaj<span className="text-primary">Johari</span>
+              Made with ❤️ by Bhaturaj<span className="text-primary">Johari</span>
             </p>
             <p className="text-sm text-gray-400">
-              Developer & Tech Enthusiast
+              Developer & AI Enthusiast
             </p>
           </div>
           
